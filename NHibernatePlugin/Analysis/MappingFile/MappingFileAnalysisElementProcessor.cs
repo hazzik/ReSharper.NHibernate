@@ -414,7 +414,6 @@ namespace NHibernatePlugin.Analysis.MappingFile
             IAccessor accessor = null;
             IField field = null;
             string className = (typeElement == null) ? UndefinedType : typeElement.ShortName;
-            // TODO: call PsiUtils.GetPropertySetter and GetPropertyGetter instead of GetProperty
             if ((access.Method == AccessMethod.AccessMethodProperty) || (access.Method == AccessMethod.AccessMethodNosetter)) {
                 accessor = PsiUtils.GetPropertyGetter(typeElement, propertyName);
                 HighlightPropertyGetter(propertyName, accessor, nameAttribute, className);

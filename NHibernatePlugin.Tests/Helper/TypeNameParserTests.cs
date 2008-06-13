@@ -105,5 +105,38 @@ namespace NHibernatePlugin.Tests.Helper
             Assert.That(typeNameParser.AssemblyName, Is.EqualTo("mscorlib"));
             Assert.That(typeNameParser.FullQualifiedAssemblyName, Is.EqualTo("mscorlib"));
         }
+
+        [Test]
+        public void Full_qualified_name_with_assembly_and_namespace() {
+            TypeNameParser typeNameParser = new TypeNameParser("System.String", "mscorlib", "System");
+            Assert.That(typeNameParser.TypeName, Is.EqualTo("String"));
+            Assert.That(typeNameParser.Namespace, Is.EqualTo("System"));
+            Assert.That(typeNameParser.QualifiedTypeName, Is.EqualTo("System.String"));
+            Assert.That(typeNameParser.FullQualifiedTypeName, Is.EqualTo("System.String, mscorlib"));
+            Assert.That(typeNameParser.AssemblyName, Is.EqualTo("mscorlib"));
+            Assert.That(typeNameParser.FullQualifiedAssemblyName, Is.EqualTo("mscorlib"));
+        }
+
+        [Test]
+        public void Full_qualified_name_with_assembly_and_namespace2() {
+            TypeNameParser typeNameParser = new TypeNameParser("System.String, mscorlib", "mscorlib", "System");
+            Assert.That(typeNameParser.TypeName, Is.EqualTo("String"));
+            Assert.That(typeNameParser.Namespace, Is.EqualTo("System"));
+            Assert.That(typeNameParser.QualifiedTypeName, Is.EqualTo("System.String"));
+            Assert.That(typeNameParser.FullQualifiedTypeName, Is.EqualTo("System.String, mscorlib"));
+            Assert.That(typeNameParser.AssemblyName, Is.EqualTo("mscorlib"));
+            Assert.That(typeNameParser.FullQualifiedAssemblyName, Is.EqualTo("mscorlib"));
+        }
+
+        [Test]
+        public void Full_qualified_name_with_assembly_and_namespace3() {
+            TypeNameParser typeNameParser = new TypeNameParser("My.Name.Space.Type, It.Assembly", "It.Assembly", "My.Name.Space");
+            Assert.That(typeNameParser.TypeName, Is.EqualTo("Type"));
+            Assert.That(typeNameParser.Namespace, Is.EqualTo("My.Name.Space"));
+            Assert.That(typeNameParser.QualifiedTypeName, Is.EqualTo("My.Name.Space.Type"));
+            Assert.That(typeNameParser.FullQualifiedTypeName, Is.EqualTo("My.Name.Space.Type, It.Assembly"));
+            Assert.That(typeNameParser.AssemblyName, Is.EqualTo("It.Assembly"));
+            Assert.That(typeNameParser.FullQualifiedAssemblyName, Is.EqualTo("It.Assembly"));
+        }
     }
 }

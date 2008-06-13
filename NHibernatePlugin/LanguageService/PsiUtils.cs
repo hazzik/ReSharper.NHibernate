@@ -133,13 +133,20 @@ namespace NHibernatePlugin.LanguageService
 
         public static ITypeElement GetTypeElement(ISolution solution, string fullQualifiedTypeName, string assembly, string @namespace) {
             TypeNameParser typeNameParser = new TypeNameParser(fullQualifiedTypeName, assembly, @namespace);
-            string className = typeNameParser.QualifiedTypeName;
-
-            if (string.IsNullOrEmpty(className)) {
+            if (string.IsNullOrEmpty(typeNameParser.TypeName)) {
                 return null;
             }
+
             PsiManager psiManager = PsiManager.GetInstance(solution);
             IDeclarationsCache declarationsCache = psiManager.GetDeclarationsCache(DeclarationsCacheScope.SolutionScope(solution, true), true);
+            ITypeElement typeElement = GetTypeElement(typeNameParser.TypeName, declarationsCache);
+            if (typeElement != null) {
+                return typeElement;
+            }
+            return GetTypeElement(typeNameParser.QualifiedTypeName, declarationsCache);
+        }
+
+        private static ITypeElement GetTypeElement(string className, IDeclarationsCache declarationsCache) {
             ITypeElement typeElement = declarationsCache.GetTypeElementByCLRName(className);
             if (typeElement == null) {
                 IDeclaredElement[] declaredElements = declarationsCache.GetElementsByShortName(className);

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:nhibernate-mapping-2.2"
-                   >
+     assembly="NHibernatePlugin.Tests" namespace="NHibernatePlugin.Tests">
   <class name="NHibernatePlugin.Tests.MappedClass, NHibernatePlugin.Tests" table="Ausgabenschluessel" dynamic-update="true" lazy="false" >
     <id name="Id" column="Ausgabe" type="System.Int64" unsaved-value="0" access="property" >
       <generator class="assigned" />
