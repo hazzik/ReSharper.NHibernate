@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:nhibernate-mapping-2.2"
+                   >
+  <class name="NHibernatePlugin.Tests.MappedClass, NHibernatePlugin.Tests" table="Ausgabenschluessel" dynamic-update="true" lazy="false" >
+    <id name="Id" column="Ausgabe" type="System.Int64" unsaved-value="0" access="property" >
+      <generator class="assigned" />
+    </id>
+
+    <discriminator column="Art" type="string" />
+    <property name="Name" column="Erklaerung" type="String" length="50" not-null="true" access="field.pascalcase-m-underscore" />
+    <property name="EinEnum" column="Kuerzel" type="NHibernatePlugin.Tests.MappedClass+MeinEnum, NHibernatePlugin.Tests" length="10" not-null="true" access="property" />
+    <property name="EinEnum" column="Kuerzel" type="NHibernatePlugin.Tests.MappedClass+MeinEnum, NHibernatePlugin.Tests" length="10" not-null="true" />
+    <many-to-one name="Customer" class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" column="DruckgruppeID" not-null="false" />
+    <one-to-one name="Customer" class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" />
+
+    <any name="EinEnum" id-type="f" >
+      <column name="vv"/>
+    </any>
+    
+    <bag name="EinEnum"  >
+      <key column="Bla" />
+      <one-to-many class="" />
+    </bag>
+    
+    <bag name="EinEnum"  >
+      <key column="Bla" />
+      <composite-element class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" >
+        <property name="Name" />
+        <many-to-one name="Address" />
+        <nested-composite-element name="Address" class="NHibernatePlugin.Tests.Address, NHibernatePlugin.Tests" >
+
+        </nested-composite-element>
+      </composite-element>
+    </bag>
+
+    <set name="EinEnum" table="AusgabenReferenz" where="PLevel &lt; 2 AND Container &lt;&gt; Element" lazy="true" cascade="none" >
+      <key column="Container" />
+      <composite-element class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" >
+        <parent name="Parent"/>
+        <property name="Name" />
+        <many-to-one name="Address" />
+        <nested-composite-element name="Parent" class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" >
+          <nested-composite-element name="Name" class="System.String" >
+
+          </nested-composite-element>
+        </nested-composite-element>
+      </composite-element>
+    </set>
+
+    <set name="EinEnum" table="AusgabenReferenz" where="PLevel &lt; 2 AND Container &lt;&gt; Element" lazy="true" cascade="none" >
+      <key column="Container" />
+      <many-to-many class="NHibernatePlugin.Tests.Address, NHibernatePlugin.Tests" column="Element" />
+    </set>
+
+    <component name="Customer" class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" >
+      <parent name="Parent" />
+      <property name="Name" />
+      <component name="Parent" class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" >
+        <property name="Name" />
+      </component>
+      <component name="Address" class="NHibernatePlugin.Tests.Address, NHibernatePlugin.Tests" >
+        <property name="Street" type="System.String" />
+        <property name="Name" type="System.String" access="field.pascalcase-m-underscore" />
+      </component>
+      <many-to-one name="Name" column="BankNr" class="System.String" not-found="ignore" />
+    </component>
+    
+    <subclass name="NHibernatePlugin.Tests.Address, NHibernatePlugin.Tests" discriminator-value="O" lazy="false" >
+      <property name="Street" type="System.String" />
+      <many-to-one name="Name" column="BankNr" class="System.String" not-found="ignore" access="field.pascalcase-m-underscore" />
+      <many-to-one name="Street" column="BankNr" class="System.String" not-found="ignore"  />
+    </subclass>
+  </class>
+  
+  <class name="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" table="Ausgabenschluessel" dynamic-update="true" lazy="false" >
+    <id name="Name" column="Ausgabe" type="String" unsaved-value="0">
+      <generator class="assigned" />
+    </id>
+  </class>
+
+  <joined-subclass name="NHibernatePlugin.Tests.Address, NHibernatePlugin.Tests" >
+    <key column="x" />
+  </joined-subclass>
+</hibernate-mapping>

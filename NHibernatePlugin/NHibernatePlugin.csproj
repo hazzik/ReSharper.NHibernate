@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14EB84EE-4D39-41ED-BACF-46397505504E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NHibernatePlugin</RootNamespace>
+    <AssemblyName>NHibernatePlugin</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRules>-Microsoft.Design#CA1012;-Microsoft.Design#CA2210;-Microsoft.Design#CA1040;-Microsoft.Design#CA1005;-Microsoft.Design#CA1020;-Microsoft.Design#CA1021;-Microsoft.Design#CA1010;-Microsoft.Design#CA1011;-Microsoft.Design#CA1009;-Microsoft.Design#CA1050;-Microsoft.Design#CA1026;-Microsoft.Design#CA1019;-Microsoft.Design#CA1031;-Microsoft.Design#CA1047;-Microsoft.Design#CA1000;-Microsoft.Design#CA1048;-Microsoft.Design#CA1051;-Microsoft.Design#CA1002;-Microsoft.Design#CA1061;-Microsoft.Design#CA1006;-Microsoft.Design#CA1046;-Microsoft.Design#CA1045;-Microsoft.Design#CA1065;-Microsoft.Design#CA1038;-Microsoft.Design#CA1008;-Microsoft.Design#CA1028;-Microsoft.Design#CA1064;-Microsoft.Design#CA1004;-Microsoft.Design#CA1035;-Microsoft.Design#CA1063;-Microsoft.Design#CA1032;-Microsoft.Design#CA1023;-Microsoft.Design#CA1033;-Microsoft.Design#CA1039;-Microsoft.Design#CA1016;-Microsoft.Design#CA1014;-Microsoft.Design#CA1017;-Microsoft.Design#CA1018;-Microsoft.Design#CA1027;-Microsoft.Design#CA1059;-Microsoft.Design#CA1060;-Microsoft.Design#CA1034;-Microsoft.Design#CA1013;-Microsoft.Design#CA1036;-Microsoft.Design#CA1044;-Microsoft.Design#CA1041;-Microsoft.Design#CA1025;-Microsoft.Design#CA1052;-Microsoft.Design#CA1053;-Microsoft.Design#CA1057;-Microsoft.Design#CA1058;-Microsoft.Design#CA1001;-Microsoft.Design#CA1049;-Microsoft.Design#CA1054;-Microsoft.Design#CA1056;-Microsoft.Design#CA1055;-Microsoft.Design#CA1030;-Microsoft.Design#CA1003;-Microsoft.Design#CA1007;-Microsoft.Design#CA1043;-Microsoft.Design#CA1024;-Microsoft.Globalization#CA1301;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1308;-Microsoft.Globalization#CA1306;-Microsoft.Globalization#CA1304;-Microsoft.Globalization#CA1305;-Microsoft.Globalization#CA2101;-Microsoft.Globalization#CA1300;-Microsoft.Globalization#CA1307;-Microsoft.Globalization#CA1309;-Microsoft.Interoperability#CA1403;-Microsoft.Interoperability#CA1406;-Microsoft.Interoperability#CA1413;-Microsoft.Interoperability#CA1402;-Microsoft.Interoperability#CA1407;-Microsoft.Interoperability#CA1404;-Microsoft.Interoperability#CA1410;-Microsoft.Interoperability#CA1411;-Microsoft.Interoperability#CA1405;-Microsoft.Interoperability#CA1409;-Microsoft.Interoperability#CA1415;-Microsoft.Interoperability#CA1408;-Microsoft.Interoperability#CA1414;-Microsoft.Interoperability#CA1412;-Microsoft.Interoperability#CA1400;-Microsoft.Interoperability#CA1401;-Microsoft.Naming#CA1702;-Microsoft.Naming#CA1700;-Microsoft.Naming#CA1712;-Microsoft.Naming#CA1713;-Microsoft.Naming#CA1714;-Microsoft.Naming#CA1709;-Microsoft.Naming#CA1704;-Microsoft.Naming#CA1708;-Microsoft.Naming#CA1715;-Microsoft.Naming#CA1710;-Microsoft.Naming#CA1720;-Microsoft.Naming#CA1707;-Microsoft.Naming#CA1722;-Microsoft.Naming#CA1711;-Microsoft.Naming#CA1716;-Microsoft.Naming#CA1717;-Microsoft.Naming#CA1725;-Microsoft.Naming#CA1719;-Microsoft.Naming#CA1721;-Microsoft.Naming#CA1701;-Microsoft.Naming#CA1703;-Microsoft.Naming#CA1724;-Microsoft.Naming#CA1726</CodeAnalysisRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Platform.ReSharper.DocumentManager, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.Platform.ReSharper.DocumentManager.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.Platform.ReSharper.DocumentModel, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.Platform.ReSharper.DocumentModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.Platform.ReSharper.ProjectModel, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.Platform.ReSharper.ProjectModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.Platform.ReSharper.Shell, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.Platform.ReSharper.Shell.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.Platform.ReSharper.Util, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.Platform.ReSharper.Util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.ReSharper.Daemon, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.ReSharper.Daemon.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.ReSharper.Daemon.Xml, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.ReSharper.Daemon.Xml.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.ReSharper.NewRefactorings, Version=4.0.764.83, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.ReSharper.NewRefactorings.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.ReSharper.Psi, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.ReSharper.Psi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.ReSharper.Psi.CSharp, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.ReSharper.Psi.CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JetBrains.ReSharper.Psi.Xml, Version=4.0.762.23, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\JetBrains\ReSharper\v4.0\v.Everything\Bin\JetBrains.ReSharper.Psi.Xml.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analysis\CSharp\CSharpAnalysisDaemonStage.cs" />
+    <Compile Include="Analysis\CSharp\CSharpAnalysisDaemonStageProcess.cs" />
+    <Compile Include="Analysis\CSharp\CSharpAnalysisElementProcessor.cs" />
+    <Compile Include="Analysis\MappingFile\MappingFileDaemonBehaviour.cs" />
+    <Compile Include="Helper\Naming.cs" />
+    <Compile Include="Highlighting\EmbeddedResourceHighlighting.cs" />
+    <Compile Include="Highlighting\HighlightingRegisterShellComponent.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Helper\AccessMethod.cs" />
+    <Compile Include="Highlighting\AccessHighlighting.cs" />
+    <Compile Include="Highlighting\Highlighting.cs" />
+    <Compile Include="Highlighting\NamespaceHighlighting.cs" />
+    <Compile Include="Highlighting\PropertyHighlighting.cs" />
+    <Compile Include="Highlighting\ReferenceHighlighting.cs" />
+    <Compile Include="Highlighting\TypeHighlighting.cs" />
+    <Compile Include="LanguageService\MappingFileBuildProviderChecker.cs" />
+    <Compile Include="LanguageService\MappingFileLanguageCacheProvider.cs" />
+    <Compile Include="LanguageService\MappingFileLanguageService.cs" />
+    <Compile Include="LanguageService\MappingFileReferenceSearcher.cs" />
+    <Compile Include="LanguageService\MappingFileSearcherFactory.cs" />
+    <Compile Include="LanguageService\Parser\Keyword.cs" />
+    <Compile Include="LanguageService\PsiUtils.cs" />
+    <Compile Include="LanguageService\Psi\AnyTag.cs" />
+    <Compile Include="LanguageService\Psi\ArrayTag.cs" />
+    <Compile Include="LanguageService\Psi\BagTag.cs" />
+    <Compile Include="LanguageService\Psi\ClassTag.cs" />
+    <Compile Include="LanguageService\Psi\ComponentTag.cs" />
+    <Compile Include="LanguageService\Psi\CompositeElementTag.cs" />
+    <Compile Include="LanguageService\Psi\DynamicComponentTag.cs" />
+    <Compile Include="LanguageService\Psi\FileTag.cs" />
+    <Compile Include="LanguageService\Psi\HibernateMappingTag.cs" />
+    <Compile Include="LanguageService\Parser\MappingFileCompositeNodeType.cs" />
+    <Compile Include="LanguageService\Parser\MappingFileElementFactory.cs" />
+    <Compile Include="LanguageService\Parser\MappingFileElementType.cs" />
+    <Compile Include="LanguageService\Parser\MappingFileParser.cs" />
+    <Compile Include="LanguageService\MappingFileProjectFileLanguageService.cs" />
+    <Compile Include="LanguageService\MappingFileTypePresenter.cs" />
+    <Compile Include="LanguageService\Psi\IdBagTag.cs" />
+    <Compile Include="LanguageService\Psi\IdTag.cs" />
+    <Compile Include="LanguageService\Psi\INamedTag.cs" />
+    <Compile Include="LanguageService\Psi\JoinedSubclassTag.cs" />
+    <Compile Include="LanguageService\Psi\ListTag.cs" />
+    <Compile Include="LanguageService\Psi\ManyToanyTag.cs" />
+    <Compile Include="LanguageService\Psi\ManyToManyTag.cs" />
+    <Compile Include="LanguageService\Psi\ManyToOneTag.cs" />
+    <Compile Include="LanguageService\Psi\MapTag.cs" />
+    <Compile Include="LanguageService\Psi\MiscellaneousTag.cs" />
+    <Compile Include="LanguageService\Parser\MappingFileTreeBuilder.cs" />
+    <Compile Include="LanguageService\Psi\NestedCompositeElementTag.cs" />
+    <Compile Include="LanguageService\Psi\OneToManyTag.cs" />
+    <Compile Include="LanguageService\Psi\OneToOneTag.cs" />
+    <Compile Include="LanguageService\Psi\ParentTag.cs" />
+    <Compile Include="LanguageService\Psi\PrimitiveArrayTag.cs" />
+    <Compile Include="LanguageService\Psi\PropertyTag.cs" />
+    <Compile Include="LanguageService\Psi\MappingFile.cs" />
+    <Compile Include="LanguageService\Psi\NameAttribute.cs" />
+    <Compile Include="LanguageService\Psi\SetTag.cs" />
+    <Compile Include="LanguageService\Psi\SubclassTag.cs" />
+    <Compile Include="LanguageService\References\NameReference.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helper\TypeNameParser.cs" />
+    <Compile Include="Analysis\MappingFile\MappingFileAnalysisDaemonStage.cs" />
+    <Compile Include="Analysis\MappingFile\MappingFileAnalysisDaemonStageProcess.cs" />
+    <Compile Include="Analysis\MappingFile\MappingFileAnalysisElementProcessor.cs" />
+    <Compile Include="Refactorings\MappingFileRefactoringLanguageService.cs" />
+    <Compile Include="Refactorings\Rename\MappingFileRename.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

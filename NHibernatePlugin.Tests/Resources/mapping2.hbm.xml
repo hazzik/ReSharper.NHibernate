@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xmlns="urn:nhibernate-mapping-2.2" 
+                   default-access="field.pascalcase-underscore">
+  <class name="Examples.Customer2, Examples" table="Example" >
+    <id name="Id" column="Ausgabe" type="System.Int64" access="field.pascalcase-underscore">
+      <generator class="assigned" />
+    </id>
+
+    <property name="Name" column="Name" type="System.String" access="property" />
+    <property name="Street" column="Street" type="System.String" />
+    <property name="EntityId" column="Id" type="System.Int64" access="property" />
+  </class>
+</hibernate-mapping>

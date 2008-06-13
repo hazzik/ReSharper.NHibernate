@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernatePlugin", "NHibernatePlugin\NHibernatePlugin.csproj", "{14EB84EE-4D39-41ED-BACF-46397505504E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernatePlugin.Tests", "NHibernatePlugin.Tests\NHibernatePlugin.Tests.csproj", "{A04842E2-C5CC-4D19-9E66-24B53B4DB029}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{C5BCB62B-A604-4320-B724-A73DD80EF64A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14EB84EE-4D39-41ED-BACF-46397505504E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14EB84EE-4D39-41ED-BACF-46397505504E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14EB84EE-4D39-41ED-BACF-46397505504E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14EB84EE-4D39-41ED-BACF-46397505504E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A04842E2-C5CC-4D19-9E66-24B53B4DB029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A04842E2-C5CC-4D19-9E66-24B53B4DB029}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A04842E2-C5CC-4D19-9E66-24B53B4DB029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A04842E2-C5CC-4D19-9E66-24B53B4DB029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5BCB62B-A604-4320-B724-A73DD80EF64A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BCB62B-A604-4320-B724-A73DD80EF64A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BCB62B-A604-4320-B724-A73DD80EF64A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BCB62B-A604-4320-B724-A73DD80EF64A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
