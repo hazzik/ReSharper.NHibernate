@@ -150,7 +150,7 @@ namespace NHibernatePlugin.LanguageService
             ITypeElement typeElement = declarationsCache.GetTypeElementByCLRName(className);
             if (typeElement == null) {
                 IDeclaredElement[] declaredElements = declarationsCache.GetElementsByShortName(className);
-                if (declaredElements.Length == 1) {
+                if ((declaredElements.Length == 1) && (declaredElements[0] is ITypeElement)) {
                     return (ITypeElement)declaredElements[0];
                 }
             }

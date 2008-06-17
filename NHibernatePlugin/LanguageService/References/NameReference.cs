@@ -90,6 +90,11 @@ namespace NHibernatePlugin.LanguageService.References
                 Logger.LogMessage("  property found: {0}", property.ShortName);
                 result.Add(property.ShortName);
             }
+            ITypeElement typeElement = PsiUtils.GetTypeElement(GetProject().GetSolution(), nameAttribute.UnquotedValue, "", "");
+            if (typeElement != null) {
+                Logger.LogMessage("  type found: {0}", typeElement.ShortName);
+                result.Add(typeElement.ShortName);
+            }
             return result.ToArray();
         }
 
@@ -106,14 +111,30 @@ namespace NHibernatePlugin.LanguageService.References
                 Logger.LogMessage("  property found: {0}", property.ShortName);
                 symbolTable.AddSymbol(property, property.IdSubstitution, null, 1);
             }
+            ITypeElement typeElement = PsiUtils.GetTypeElement(GetProject().GetSolution(), nameAttribute.UnquotedValue, "", "");
+            if (typeElement != null) {
+                Logger.LogMessage("  type found: {0}", typeElement.ShortName);
+                symbolTable.AddSymbol(nameAttribute.UnquotedValue, typeElement, typeElement.IdSubstitution, null, 0);
+            }
 
             return symbolTable;
         }
 
         protected override IReference BindToInternal(IDeclaredElement element) {
-            string name = element.ShortName
-                .TrimFromStart("_")
-                .TrimFromStart("m_");
+            string name;
+            IClass klass = element as IClass;
+            if (klass != null) {
+                name = klass.CLRName;
+                if (klass.Module != null) {
+                    name += ", " + klass.Module.Name;
+                }
+            }
+            else {
+                name = element.ShortName
+                    .TrimFromStart("_")
+                    .TrimFromStart("m_");
+            }
+ 
             return ReferenceWithTokenUtil.SetText(this, name, ElementFactory);
         }
     }

@@ -18,6 +18,10 @@ namespace NHibernatePlugin.LanguageService.Psi
             m_ContainerName = containerName;
         }
 
+        protected NameAttribute(CompositeNodeType compositeNodeType)
+            : base(compositeNodeType) {
+        }
+
         protected IReferenceImpl[] CreateReferencesInternal(IXmlAttributeValue value) {
             Logger.LogMessage("CreateReferencesInternal for {0}", value.GetText());
             IXmlValueToken valueToken = value.ToTreeNode().ValueToken;
@@ -25,10 +29,6 @@ namespace NHibernatePlugin.LanguageService.Psi
                 return null;
             }
             return new IReferenceImpl[] {new NameReference(this, valueToken, valueToken.UnquotedValueRange)};
-        }
-
-        protected NameAttribute(CompositeNodeType compositeNodeType)
-            : base(compositeNodeType) {
         }
 
         protected override void ClearCachedData() {

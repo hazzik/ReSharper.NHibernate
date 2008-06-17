@@ -123,6 +123,8 @@ namespace NHibernatePlugin.LanguageService.Parser
                     return new NameAttribute(containerName);
                 case Keyword.NestedCompositeElement:
                     return new NameAttribute(containerName);
+                case Keyword.Class:
+                    return new NameAttribute(containerName);
             }
             return base.CreateAttribute(nameIdentifier, attributeContainer, parentTag);
         }
