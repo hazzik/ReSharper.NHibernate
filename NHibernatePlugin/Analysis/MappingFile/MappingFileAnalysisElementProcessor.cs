@@ -340,17 +340,13 @@ namespace NHibernatePlugin.Analysis.MappingFile
 
             string fullQualifiedTypeName = attribute.UnquotedValue;
             Logger.LogMessage("Type is {0}", fullQualifiedTypeName);
-            TypeNameParser typeNameParser = new TypeNameParser(fullQualifiedTypeName, m_Assembly, m_Namespace);
-            string className = typeNameParser.QualifiedTypeName;
-            if (string.IsNullOrEmpty(className)) {
-                return null;
-            }
             
-            ITypeElement typeElement = PsiUtils.GetTypeElement(m_Process.Solution, className, m_Assembly, m_Namespace);
+            ITypeElement typeElement = PsiUtils.GetTypeElement(tag, m_Process.Solution, fullQualifiedTypeName);
             if ((typeElement == null) || (typeElement.Module == null)) {
                 AddHighlighting(attribute, new TypeHighlighting(string.Format("Type '{0}' could not be resolved", fullQualifiedTypeName)));
             }
             else {
+                TypeNameParser typeNameParser = new TypeNameParser(fullQualifiedTypeName, m_Assembly, m_Namespace);
                 string assemblyName = typeNameParser.AssemblyName;
                 if ((typeElement.Module.Name != "mscorlib") && (typeElement.Module.Name != assemblyName)) {
                     AddHighlighting(attribute, new TypeHighlighting(string.Format("Assembly name '{0}' should be '{1}'", assemblyName, typeElement.Module.Name)));
