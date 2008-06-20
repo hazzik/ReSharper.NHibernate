@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                    xmlns="urn:nhibernate-mapping-2.2" 
-                   default-access="field.pascalcase-underscore">
-  <class name="Examples.Customer2, Examples" table="Example" >
+                   default-access="field.pascalcase-underscore"
+                   namespace="Examples" assembly="Examples" >
+  <class name="Customer2" table="Example" >
     <id name="Id" column="Ausgabe" type="System.Int64" access="field.pascalcase-underscore">
       <generator class="assigned" />
     </id>

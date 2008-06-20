@@ -4,6 +4,7 @@ namespace NHibernatePlugin.LanguageService.Parser
     {
         public const string HibernateMapping = "hibernate-mapping";
         public const string Class = "class";
+        public const string Type = "type";
         public const string Id = "id";
         public const string Property = "property";
         public const string Bag = "bag";

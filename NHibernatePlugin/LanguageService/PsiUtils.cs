@@ -146,11 +146,11 @@ namespace NHibernatePlugin.LanguageService
 
             PsiManager psiManager = PsiManager.GetInstance(solution);
             IDeclarationsCache declarationsCache = psiManager.GetDeclarationsCache(DeclarationsCacheScope.SolutionScope(solution, true), true);
+            return GetTypeElement(typeNameParser.QualifiedTypeName, declarationsCache);
             ITypeElement typeElement = GetTypeElement(typeNameParser.TypeName, declarationsCache);
             if (typeElement != null) {
                 return typeElement;
             }
-            return GetTypeElement(typeNameParser.QualifiedTypeName, declarationsCache);
         }
 
         private static ITypeElement GetTypeElement(string className, IDeclarationsCache declarationsCache) {

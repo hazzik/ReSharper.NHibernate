@@ -89,42 +89,44 @@ namespace NHibernatePlugin.LanguageService.Parser
         public override IXmlAttribute CreateAttribute(IXmlIdentifierNode nameIdentifier, IXmlAttributeContainer attributeContainer, IXmlTagContainer parentTag) {
             string attributeName = nameIdentifier.GetText();
             string containerName = attributeContainer.ContainerName;
-            if (attributeName != Keyword.Name) {
-                return base.CreateAttribute(nameIdentifier, attributeContainer, parentTag);
+            if (attributeName == Keyword.Name) {
+                switch (containerName) {
+                    case Keyword.Id:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Property:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Component:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.DynamicComponent:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Bag:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Set:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.IdBag:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Array:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.PrimitiveArray:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.List:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Any:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.ManyToOne:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.OneToOne:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Parent:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.NestedCompositeElement:
+                        return new PropertyNameAttribute(containerName);
+                    case Keyword.Class:
+                        return new ClassNameAttribute(containerName);
+                }
             }
-            switch (containerName) {
-                case Keyword.Id:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Property:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Component:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.DynamicComponent:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Bag:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Set:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.IdBag:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Array:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.PrimitiveArray:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.List:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Any:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.ManyToOne:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.OneToOne:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Parent:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.NestedCompositeElement:
-                    return new PropertyNameAttribute(containerName);
-                case Keyword.Class:
-                    return new ClassNameAttribute(containerName);
+            if ((attributeName == Keyword.Type) || (attributeName == Keyword.Class)) {
+                return new ClassNameAttribute(containerName);
             }
             return base.CreateAttribute(nameIdentifier, attributeContainer, parentTag);
         }
