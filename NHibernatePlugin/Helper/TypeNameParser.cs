@@ -4,6 +4,7 @@ namespace NHibernatePlugin.Helper
     {
         private const string NamespaceSeparator = ".";
         private const string AssemblySeparator = ",";
+        private const string GenericsSeparator = "[";
         private readonly string m_Assembly;
         private readonly string m_Namespace;
         private string m_FullQualifiedTypeName;
@@ -24,9 +25,13 @@ namespace NHibernatePlugin.Helper
         public string TypeName {
             get {
                 string name = m_FullQualifiedTypeName.Split(new char[] {','})[0].Trim();
+                int nextBracePos = name.IndexOf(GenericsSeparator, 0);
                 int pos = 0;
                 do {
                     int nextPos = name.IndexOf(NamespaceSeparator, pos);
+                    if ((nextBracePos >= 0) && (nextPos > nextBracePos)) {
+                        return name.Substring(pos, name.Length - pos).Trim();
+                    }
                     if ((nextPos < 0) && (pos > 0)) {
                         return name.Substring(pos, name.Length - pos).Trim();
                     }
@@ -44,9 +49,13 @@ namespace NHibernatePlugin.Helper
                 if (@namespace.IndexOf(NamespaceSeparator) == -1) {
                     return "";
                 }
+                int nextBracePos = m_FullQualifiedTypeName.IndexOf(GenericsSeparator, 0);
                 pos = 0;
                 do {
                     int nextPos = @namespace.IndexOf(NamespaceSeparator, pos);
+                    if ((nextBracePos >= 0) && (nextPos > nextBracePos)) {
+                        return @namespace.Substring(0, pos - 1).Trim();
+                    }
                     if ((nextPos < 0) && (pos > 0)) {
                         return @namespace.Substring(0, pos - 1).Trim();
                     }
