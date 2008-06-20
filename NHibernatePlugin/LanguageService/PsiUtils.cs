@@ -95,12 +95,12 @@ namespace NHibernatePlugin.LanguageService
         public static ITypeElement GetTypeElement(IXmlTag classTag, ISolution solution, string className) {
             string @namespace = "";
             string assembly = "";
-            IXmlTag hibernateMapping = classTag.GetContainingElement<HibernateMappingTag>(false);
+            HibernateMappingTag hibernateMapping = classTag.GetContainingElement<HibernateMappingTag>(false);
             if (hibernateMapping != null) {
-                IXmlAttribute namespaceAttribute = hibernateMapping.GetAttribute("namespace");
+                IXmlAttribute namespaceAttribute = hibernateMapping.GetNamespaceAttribute();
                 @namespace = namespaceAttribute == null ? "" : namespaceAttribute.UnquotedValue;
 
-                IXmlAttribute assemblyAttribute = hibernateMapping.GetAttribute("assembly");
+                IXmlAttribute assemblyAttribute = hibernateMapping.GetAssemblyAttribute();
                 assembly = assemblyAttribute == null ? "" : assemblyAttribute.UnquotedValue;
             }
 
@@ -138,7 +138,7 @@ namespace NHibernatePlugin.LanguageService
             return result;
         }
 
-        public static ITypeElement GetTypeElement(ISolution solution, string fullQualifiedTypeName, string assembly, string @namespace) {
+        private static ITypeElement GetTypeElement(ISolution solution, string fullQualifiedTypeName, string assembly, string @namespace) {
             TypeNameParser typeNameParser = new TypeNameParser(fullQualifiedTypeName, assembly, @namespace);
             if (string.IsNullOrEmpty(typeNameParser.TypeName)) {
                 return null;
@@ -165,10 +165,6 @@ namespace NHibernatePlugin.LanguageService
                 }
             }
             return typeElement;
-        }
-
-        public static ITypeElement GetTypeElement(ISolution solution, string className) {
-            return GetTypeElement(solution, className, "", "");
         }
 
         public static IField GetField(ISolution solution, NameAttribute propertyNameAttribute, string attributeName, IXmlTag containingElement) {

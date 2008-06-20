@@ -24,7 +24,7 @@
     
     <bag name="EinEnum"  >
       <key column="Bla" />
-      <composite-element class="NHibernatePlugin.Tests.Customer, NHibernatePlugin.Tests" >
+      <composite-element class="Customer" >
         <property name="Name" />
         <many-to-one name="Address" />
         <nested-composite-element name="Address" class="NHibernatePlugin.Tests.Address, NHibernatePlugin.Tests" >

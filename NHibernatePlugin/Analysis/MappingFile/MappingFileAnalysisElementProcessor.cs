@@ -152,7 +152,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
                 Logger.LogMessage("Component: {0}", nextNode.GetText());
                 HighlightUndefinedProperty((IXmlTag)nextNode, typeElement, "class");
                 ITypeElement componentPropertyType = HighlightUndefinedType((IXmlTag)nextNode, "class");
-                ITypeElement componentType = PsiUtils.GetTypeElement(m_Process.Solution, GetPropertyType((IXmlTag)nextNode, typeElement));
+                ITypeElement componentType = PsiUtils.GetTypeElement((IXmlTag)nextNode, m_Process.Solution, GetPropertyType((IXmlTag)nextNode, typeElement));
 
                 if ((componentType != null) && (componentPropertyType != null) && !componentType.Equals(componentPropertyType)) {
                     AddHighlighting(nextNode, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}'", componentPropertyType.ShortName, componentType.ShortName)));
@@ -431,21 +431,21 @@ namespace NHibernatePlugin.Analysis.MappingFile
         private void HighlightPropertyType(IAccessor accessor, IElement nameAttribute, ITypeOwner field, IElement typeAttribute, IXmlTag xmlTag, string attributeName) {
             ITypeElement propertyClass = HighlightUndefinedType(xmlTag, attributeName);
             if (accessor != null) {
-                ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(m_Process.Solution, accessor.Parameters[0].Type.ToString());
+                ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, accessor.Parameters[0].Type.ToString());
                 if ((propertyTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(propertyTypeElement))) {
                     AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, propertyTypeElement.ShortName)));
                 }
             }
             if (field != null) {
-                ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(m_Process.Solution, field.Type.ToString());
+                ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, field.Type.ToString());
                 if ((fieldTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(fieldTypeElement))) {
                     AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, fieldTypeElement.ShortName)));
                 }
             }
 
             if ((accessor != null) && (field != null)) {
-                ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(m_Process.Solution, accessor.Parameters[0].Type.ToString());
-                ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(m_Process.Solution, field.Type.ToString());
+                ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, accessor.Parameters[0].Type.ToString());
+                ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, field.Type.ToString());
                 if ((propertyTypeElement != null) && (fieldTypeElement != null) && (!propertyTypeElement.Equals(fieldTypeElement))) {
                     AddHighlighting(nameAttribute, new TypeHighlighting(string.Format("Property and field type differ: '{0}' vs. '{1}'", propertyTypeElement.ShortName, fieldTypeElement.ShortName)));
                 }
