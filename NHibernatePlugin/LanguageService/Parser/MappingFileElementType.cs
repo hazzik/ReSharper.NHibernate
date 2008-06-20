@@ -34,7 +34,8 @@ namespace NHibernatePlugin.LanguageService.Parser
         
         public static readonly CompositeNodeType MISCELLANEOUS = new MISCELLANEOUS_TYPE();
 
-        public static readonly CompositeNodeType NAME_ATTRIBUTE = new NAME_ATTRIBUTE_TYPE();
+        public static readonly CompositeNodeType PROPERTY_NAME_ATTRIBUTE = new PROPERTY_NAME_ATTRIBUTE_TYPE();
+        public static readonly CompositeNodeType CLASS_NAME_ATTRIBUTE = new CLASS_NAME_ATTRIBUTE_TYPE();
 
         private class FILE_TYPE : MappingFileCompositeNodeType
         {
@@ -322,15 +323,27 @@ namespace NHibernatePlugin.LanguageService.Parser
             }
         }
 
-        private class NAME_ATTRIBUTE_TYPE : MappingFileCompositeNodeType
+        private class PROPERTY_NAME_ATTRIBUTE_TYPE : MappingFileCompositeNodeType
         {
-            public NAME_ATTRIBUTE_TYPE()
-                : base("NAME_ATTRIBUTE") {
+            public PROPERTY_NAME_ATTRIBUTE_TYPE()
+                : base("PROPERTY_NAME_ATTRIBUTE") {
             }
 
             public override CompositeElement Create() {
-                Logger.LogMessage("**** NAME_ATTRIBUTE_TYPE.Create called");
-                return new NameAttribute("");
+                Logger.LogMessage("**** PROPERTY_NAME_ATTRIBUTE_TYPE.Create called");
+                return new PropertyNameAttribute("");
+            }
+        }
+
+        private class CLASS_NAME_ATTRIBUTE_TYPE : MappingFileCompositeNodeType
+        {
+            public CLASS_NAME_ATTRIBUTE_TYPE()
+                : base("CLASS_NAME_ATTRIBUTE") {
+            }
+
+            public override CompositeElement Create() {
+                Logger.LogMessage("**** CLASS_NAME_ATTRIBUTE_TYPE.Create called");
+                return new ClassNameAttribute("");
             }
         }
     }

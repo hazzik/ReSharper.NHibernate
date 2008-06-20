@@ -94,37 +94,37 @@ namespace NHibernatePlugin.LanguageService.Parser
             }
             switch (containerName) {
                 case Keyword.Id:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Property:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Component:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.DynamicComponent:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Bag:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Set:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.IdBag:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Array:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.PrimitiveArray:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.List:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Any:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.ManyToOne:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.OneToOne:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Parent:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.NestedCompositeElement:
-                    return new NameAttribute(containerName);
+                    return new PropertyNameAttribute(containerName);
                 case Keyword.Class:
-                    return new NameAttribute(containerName);
+                    return new ClassNameAttribute(containerName);
             }
             return base.CreateAttribute(nameIdentifier, attributeContainer, parentTag);
         }

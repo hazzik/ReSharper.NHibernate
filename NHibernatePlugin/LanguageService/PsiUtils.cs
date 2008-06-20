@@ -71,8 +71,8 @@ namespace NHibernatePlugin.LanguageService
             return null;
         }
 
-        public static IProperty GetProperty(ISolution solution, NameAttribute nameAttribute, string attributeName, IXmlTag containingElement) {
-            string propertyName = nameAttribute.UnquotedValue;
+        public static IProperty GetProperty(ISolution solution, PropertyNameAttribute propertyNameAttribute, string attributeName, IXmlTag containingElement) {
+            string propertyName = propertyNameAttribute.UnquotedValue;
             Logger.LogMessage("GetProperty {0} ({1})", propertyName, attributeName);
 
             ITypeElement typeElement = GetTypeElement(solution, containingElement, attributeName);
@@ -89,13 +89,20 @@ namespace NHibernatePlugin.LanguageService
             if ((nameAttribute == null) || (nameAttribute.UnquotedValue == null)) {
                 return null;
             }
-            string className = nameAttribute.UnquotedValue;
+            return GetTypeElement(classTag, solution, nameAttribute.UnquotedValue);
+        }
 
-            IXmlAttribute namespaceAttribute = classTag.GetAttribute("namespace");
-            string @namespace = namespaceAttribute == null ? "" : namespaceAttribute.UnquotedValue;
+        public static ITypeElement GetTypeElement(IXmlTag classTag, ISolution solution, string className) {
+            string @namespace = "";
+            string assembly = "";
+            IXmlTag hibernateMapping = classTag.GetContainingElement<HibernateMappingTag>(false);
+            if (hibernateMapping != null) {
+                IXmlAttribute namespaceAttribute = hibernateMapping.GetAttribute("namespace");
+                @namespace = namespaceAttribute == null ? "" : namespaceAttribute.UnquotedValue;
 
-            IXmlAttribute assemblyAttribute = classTag.GetAttribute("assembly");
-            string assembly = assemblyAttribute == null ? "" : assemblyAttribute.UnquotedValue;
+                IXmlAttribute assemblyAttribute = hibernateMapping.GetAttribute("assembly");
+                assembly = assemblyAttribute == null ? "" : assemblyAttribute.UnquotedValue;
+            }
 
             return GetTypeElement(solution, className, assembly, @namespace);
         }
@@ -161,12 +168,12 @@ namespace NHibernatePlugin.LanguageService
             return GetTypeElement(solution, className, "", "");
         }
 
-        public static IField GetField(ISolution solution, NameAttribute nameAttribute, string attributeName, IXmlTag containingElement) {
-            string fieldName = nameAttribute.UnquotedValue;
+        public static IField GetField(ISolution solution, NameAttribute propertyNameAttribute, string attributeName, IXmlTag containingElement) {
+            string fieldName = propertyNameAttribute.UnquotedValue;
             Logger.LogMessage("GetField {0} ({1})", fieldName, attributeName);
 
             AccessMethod access = null;
-            XmlTag xmlTag = nameAttribute.GetContainingElement<XmlTag>(true);
+            XmlTag xmlTag = propertyNameAttribute.GetContainingElement<XmlTag>(true);
             if (xmlTag != null) {
                 IXmlAttribute accessAttribute = xmlTag.GetAttribute("access");
                 if (accessAttribute != null) {
@@ -175,7 +182,7 @@ namespace NHibernatePlugin.LanguageService
                 }
             }
             if (access == null) {
-                HibernateMappingTag hibernateMappingTag = Parent<HibernateMappingTag>(nameAttribute, Keyword.HibernateMapping);
+                HibernateMappingTag hibernateMappingTag = Parent<HibernateMappingTag>(propertyNameAttribute, Keyword.HibernateMapping);
                 if (hibernateMappingTag != null) {
                     IXmlAttribute accessAttribute = hibernateMappingTag.GetDefaultAccessAttribute();
                     if (accessAttribute != null) {

@@ -124,6 +124,7 @@
     <Compile Include="LanguageService\Psi\AnyTag.cs" />
     <Compile Include="LanguageService\Psi\ArrayTag.cs" />
     <Compile Include="LanguageService\Psi\BagTag.cs" />
+    <Compile Include="LanguageService\Psi\ClassNameAttribute.cs" />
     <Compile Include="LanguageService\Psi\ClassTag.cs" />
     <Compile Include="LanguageService\Psi\ComponentTag.cs" />
     <Compile Include="LanguageService\Psi\CompositeElementTag.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="LanguageService\Psi\MapTag.cs" />
     <Compile Include="LanguageService\Psi\MiscellaneousTag.cs" />
     <Compile Include="LanguageService\Parser\MappingFileTreeBuilder.cs" />
+    <Compile Include="LanguageService\Psi\NameAttribute.cs" />
     <Compile Include="LanguageService\Psi\NestedCompositeElementTag.cs" />
     <Compile Include="LanguageService\Psi\OneToManyTag.cs" />
     <Compile Include="LanguageService\Psi\OneToOneTag.cs" />
@@ -154,10 +156,11 @@
     <Compile Include="LanguageService\Psi\PrimitiveArrayTag.cs" />
     <Compile Include="LanguageService\Psi\PropertyTag.cs" />
     <Compile Include="LanguageService\Psi\MappingFile.cs" />
-    <Compile Include="LanguageService\Psi\NameAttribute.cs" />
+    <Compile Include="LanguageService\Psi\PropertyNameAttribute.cs" />
     <Compile Include="LanguageService\Psi\SetTag.cs" />
     <Compile Include="LanguageService\Psi\SubclassTag.cs" />
-    <Compile Include="LanguageService\References\NameReference.cs" />
+    <Compile Include="LanguageService\References\ClassNameReference.cs" />
+    <Compile Include="LanguageService\References\PropertyNameReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper\TypeNameParser.cs" />
     <Compile Include="Analysis\MappingFile\MappingFileAnalysisDaemonStage.cs" />
