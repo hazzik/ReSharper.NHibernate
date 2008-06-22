@@ -14,5 +14,7 @@ namespace Examples
         public new long EntityId {
             get { return _Id; }
         }
+
+        public Wrapper<Customer2> GenericSpecial { get; set; }
     }
 }

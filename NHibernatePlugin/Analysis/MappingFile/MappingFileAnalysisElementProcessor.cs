@@ -195,7 +195,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
                 string propertyName = attribute.UnquotedValue;
                 IProperty property = PsiUtils.GetProperty(typeElement, propertyName);
                 if (property != null) {
-                    return property.Type.ToString();
+                    return property.Type.ToString();    // TODO: ToString is wrong on generic types!!
                 }
             }
             return null;
@@ -431,12 +431,15 @@ namespace NHibernatePlugin.Analysis.MappingFile
         private void HighlightPropertyType(IAccessor accessor, IElement nameAttribute, ITypeOwner field, IElement typeAttribute, IXmlTag xmlTag, string attributeName) {
             ITypeElement propertyClass = HighlightUndefinedType(xmlTag, attributeName);
             if (accessor != null) {
+                // accessor.Parameters[0].Type !!!!!
+                // TODO: ToString is wrong on generic types!!
                 ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, accessor.Parameters[0].Type.ToString());
                 if ((propertyTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(propertyTypeElement))) {
                     AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, propertyTypeElement.ShortName)));
                 }
             }
             if (field != null) {
+                // TODO: ToString is wrong on generic types!!
                 ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, field.Type.ToString());
                 if ((fieldTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(fieldTypeElement))) {
                     AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, fieldTypeElement.ShortName)));
@@ -444,6 +447,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             }
 
             if ((accessor != null) && (field != null)) {
+                // TODO: ToString is wrong on generic types!!
                 ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, accessor.Parameters[0].Type.ToString());
                 ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, field.Type.ToString());
                 if ((propertyTypeElement != null) && (fieldTypeElement != null) && (!propertyTypeElement.Equals(fieldTypeElement))) {

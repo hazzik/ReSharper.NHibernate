@@ -11,5 +11,6 @@
     <property name="Name" column="Name" type="System.String" access="property" />
     <property name="Street" column="Street" type="System.String" />
     <property name="EntityId" column="Id" type="System.Int64" access="property" />
+    <property name="GenericSpecial" type="String" access="property" />
   </class>
 </hibernate-mapping>
