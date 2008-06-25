@@ -149,5 +149,16 @@ namespace NHibernatePlugin.Tests.Helper
             Assert.That(typeNameParser.AssemblyName, Is.EqualTo("Cei.eMerge.Common"));
             Assert.That(typeNameParser.FullQualifiedAssemblyName, Is.EqualTo("Cei.eMerge.Common"));
         }
+
+        [Test]
+        public void Generics2() {
+            TypeNameParser typeNameParser = new TypeNameParser("Wrapper`1[Examples.Customer], ExamplesAsm", "ExamplesAsm", "Examples");
+            Assert.That(typeNameParser.TypeName, Is.EqualTo("Wrapper`1[Examples.Customer]"));
+            Assert.That(typeNameParser.Namespace, Is.EqualTo("Examples"));
+            Assert.That(typeNameParser.QualifiedTypeName, Is.EqualTo("Examples.Wrapper`1[Examples.Customer]"));
+            Assert.That(typeNameParser.FullQualifiedTypeName, Is.EqualTo("Examples.Wrapper`1[Examples.Customer], ExamplesAsm"));
+            Assert.That(typeNameParser.AssemblyName, Is.EqualTo("ExamplesAsm"));
+            Assert.That(typeNameParser.FullQualifiedAssemblyName, Is.EqualTo("ExamplesAsm"));
+        }
     }
 }

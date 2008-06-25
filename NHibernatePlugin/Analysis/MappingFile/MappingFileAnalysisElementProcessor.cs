@@ -152,7 +152,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
                 Logger.LogMessage("Component: {0}", nextNode.GetText());
                 HighlightUndefinedProperty((IXmlTag)nextNode, typeElement, "class");
                 ITypeElement componentPropertyType = HighlightUndefinedType((IXmlTag)nextNode, "class");
-                ITypeElement componentType = PsiUtils.GetTypeElement((IXmlTag)nextNode, m_Process.Solution, GetPropertyType((IXmlTag)nextNode, typeElement));
+                ITypeElement componentType = GetPropertyType((IXmlTag)nextNode, typeElement);
 
                 if ((componentType != null) && (componentPropertyType != null) && !componentType.Equals(componentPropertyType)) {
                     AddHighlighting(nextNode, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}'", componentPropertyType.ShortName, componentType.ShortName)));
@@ -186,7 +186,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             }
         }
 
-        private static string GetPropertyType(IXmlTag node, ITypeElement typeElement) {
+        private static ITypeElement GetPropertyType(IXmlTag node, ITypeElement typeElement) {
             if (typeElement == null) {
                 return null;
             }
@@ -195,7 +195,10 @@ namespace NHibernatePlugin.Analysis.MappingFile
                 string propertyName = attribute.UnquotedValue;
                 IProperty property = PsiUtils.GetProperty(typeElement, propertyName);
                 if (property != null) {
-                    return property.Type.ToString();    // TODO: ToString is wrong on generic types!!
+                    IDeclaredType declaredType = property.Type as IDeclaredType;
+                    if (declaredType != null) {
+                        return declaredType.GetTypeElement();
+                    }
                 }
             }
             return null;
@@ -431,27 +434,33 @@ namespace NHibernatePlugin.Analysis.MappingFile
         private void HighlightPropertyType(IAccessor accessor, IElement nameAttribute, ITypeOwner field, IElement typeAttribute, IXmlTag xmlTag, string attributeName) {
             ITypeElement propertyClass = HighlightUndefinedType(xmlTag, attributeName);
             if (accessor != null) {
-                // accessor.Parameters[0].Type !!!!!
-                // TODO: ToString is wrong on generic types!!
-                ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, accessor.Parameters[0].Type.ToString());
-                if ((propertyTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(propertyTypeElement))) {
-                    AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, propertyTypeElement.ShortName)));
+                IDeclaredType declaredType = accessor.Parameters[0].Type as IDeclaredType;
+                if (declaredType != null) {
+                    ITypeElement propertyTypeElement = declaredType.GetTypeElement();
+                    if ((propertyTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(propertyTypeElement))) {
+                        AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, propertyTypeElement.ShortName)));
+                    }
                 }
             }
             if (field != null) {
-                // TODO: ToString is wrong on generic types!!
-                ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, field.Type.ToString());
-                if ((fieldTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(fieldTypeElement))) {
-                    AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, fieldTypeElement.ShortName)));
+                IDeclaredType declaredType = field.Type as IDeclaredType;
+                if (declaredType != null) {
+                    ITypeElement fieldTypeElement = declaredType.GetTypeElement();
+                    if ((fieldTypeElement != null) && (propertyClass != null) && (!propertyClass.IsDescendantOf(fieldTypeElement))) {
+                        AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant", propertyClass.ShortName, fieldTypeElement.ShortName)));
+                    }
                 }
             }
 
             if ((accessor != null) && (field != null)) {
-                // TODO: ToString is wrong on generic types!!
-                ITypeElement propertyTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, accessor.Parameters[0].Type.ToString());
-                ITypeElement fieldTypeElement = PsiUtils.GetTypeElement(xmlTag, m_Process.Solution, field.Type.ToString());
-                if ((propertyTypeElement != null) && (fieldTypeElement != null) && (!propertyTypeElement.Equals(fieldTypeElement))) {
-                    AddHighlighting(nameAttribute, new TypeHighlighting(string.Format("Property and field type differ: '{0}' vs. '{1}'", propertyTypeElement.ShortName, fieldTypeElement.ShortName)));
+                IDeclaredType declaredAccessorType = accessor.Parameters[0].Type as IDeclaredType;
+                IDeclaredType declaredFieldType = field.Type as IDeclaredType;
+                if ((declaredAccessorType != null) && (declaredFieldType != null)) {
+                    ITypeElement propertyTypeElement = declaredAccessorType.GetTypeElement();
+                    ITypeElement fieldTypeElement = declaredFieldType.GetTypeElement();
+                    if ((propertyTypeElement != null) && (fieldTypeElement != null) && (!propertyTypeElement.Equals(fieldTypeElement))) {
+                        AddHighlighting(nameAttribute, new TypeHighlighting(string.Format("Property and field type differ: '{0}' vs. '{1}'", propertyTypeElement.ShortName, fieldTypeElement.ShortName)));
+                    }
                 }
             }
         }

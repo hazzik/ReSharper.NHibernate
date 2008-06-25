@@ -1,3 +1,5 @@
+using System;
+
 namespace NHibernatePlugin.Helper
 {
     public class TypeNameParser
@@ -14,7 +16,9 @@ namespace NHibernatePlugin.Helper
             Normalize();
             m_Assembly = assembly ?? "";
             m_Namespace = @namespace ?? "";
-            if (!m_FullQualifiedTypeName.Contains(NamespaceSeparator) && (!string.IsNullOrEmpty(m_Namespace))) {
+            int namespaceSeparatorPos = m_FullQualifiedTypeName.IndexOf(NamespaceSeparator);
+            int genericsSeparatorPos = m_FullQualifiedTypeName.IndexOf(GenericsSeparator);
+            if (!string.IsNullOrEmpty(m_Namespace) && ((namespaceSeparatorPos == -1) || (genericsSeparatorPos != -1 && namespaceSeparatorPos > genericsSeparatorPos))) {
                 m_FullQualifiedTypeName = m_Namespace + NamespaceSeparator + m_FullQualifiedTypeName;
             }
             if (!m_FullQualifiedTypeName.Contains(AssemblySeparator) && (!string.IsNullOrEmpty(m_Assembly))) {
@@ -54,7 +58,7 @@ namespace NHibernatePlugin.Helper
                 do {
                     int nextPos = @namespace.IndexOf(NamespaceSeparator, pos);
                     if ((nextBracePos >= 0) && (nextPos > nextBracePos)) {
-                        return @namespace.Substring(0, pos - 1).Trim();
+                        return @namespace.Substring(0, Math.Max(0, pos - 1)).Trim();
                     }
                     if ((nextPos < 0) && (pos > 0)) {
                         return @namespace.Substring(0, pos - 1).Trim();
