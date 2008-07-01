@@ -410,30 +410,50 @@ namespace NHibernatePlugin.Analysis.MappingFile
         }
 
         private void HighlightUndefinedMappedProperty(IXmlTag xmlTag, string propertyName, IElement nameAttribute, IElement typeAttribute, ITypeElement typeElement, AccessMethod access, string attributeName) {
-            IAccessor accessor = null;
+            IAccessor propertyGetter = null;
+            IAccessor propertySetter = null;
             IField field = null;
             string className = (typeElement == null) ? UndefinedType : typeElement.ShortName;
             if ((access.Method == AccessMethod.AccessMethodProperty) || (access.Method == AccessMethod.AccessMethodNosetter)) {
-                accessor = PsiUtils.GetPropertyGetter(typeElement, propertyName);
-                HighlightPropertyGetter(propertyName, accessor, nameAttribute, className);
+                propertyGetter = PsiUtils.GetPropertyGetter(typeElement, propertyName);
+                HighlightPropertyGetter(propertyName, propertyGetter, nameAttribute, className);
             }
-            if ((access.Method == AccessMethod.AccessMethodProperty) || (access.Method == AccessMethod.AccessMethodNosetter)) {
-                accessor = PsiUtils.GetPropertySetter(typeElement, propertyName);
-                HighlightPropertySetter(propertyName, accessor, nameAttribute, className);
+            if (access.Method == AccessMethod.AccessMethodProperty) {
+                propertySetter = PsiUtils.GetPropertySetter(typeElement, propertyName);
+                HighlightPropertySetter(propertyName, propertySetter, nameAttribute, className);
             }
             if ((access.Method == AccessMethod.AccessMethodField) || (access.Method == AccessMethod.AccessMethodNosetter)) {
                 field = PsiUtils.GetField(typeElement, propertyName, access);
                 HighlightField(access, propertyName, nameAttribute, className, field);
             }
 
-            if (typeAttribute != null) {
-                HighlightPropertyType(accessor, nameAttribute, field, typeAttribute, xmlTag, attributeName);
+            ITypeElement propertyClass = HighlightUndefinedType(xmlTag, attributeName);
+            if ((typeAttribute != null) && (propertyClass != null)) {
+                if (propertyGetter != null) {
+                    IDeclaredType getterType = propertyGetter.ReturnType as IDeclaredType;
+                    if ((getterType != null) && (!propertyClass.IsDescendantOf(getterType.GetTypeElement()))) {
+                        AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant for property getter", propertyClass.ShortName, getterType.GetTypeElement().ShortName)));
+                    }
+                }
+                if (propertySetter != null) {
+                    IDeclaredType setterType = propertySetter.Parameters[0] as IDeclaredType;
+                    if ((setterType != null) && (!propertyClass.IsDescendantOf(setterType.GetTypeElement()))) {
+                        AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant for property setter", propertyClass.ShortName, setterType.GetTypeElement().ShortName)));
+                    }
+                }
+                if (field != null) {
+                    IDeclaredType fieldType = field.Type as IDeclaredType;
+                    if ((fieldType != null) && (!propertyClass.IsDescendantOf(fieldType.GetTypeElement()))) {
+                        AddHighlighting(typeAttribute, new TypeHighlighting(string.Format("Class name '{0}' should be '{1}' or a descendant for field '{2}'", propertyClass.ShortName, fieldType.GetTypeElement().ShortName, field.ShortName)));
+                    }
+                }
             }
         }
 
         private void HighlightPropertyType(IAccessor accessor, IElement nameAttribute, ITypeOwner field, IElement typeAttribute, IXmlTag xmlTag, string attributeName) {
             ITypeElement propertyClass = HighlightUndefinedType(xmlTag, attributeName);
             if (accessor != null) {
+                // TODO: use accessor.ReturnType on getter
                 IDeclaredType declaredType = accessor.Parameters[0].Type as IDeclaredType;
                 if (declaredType != null) {
                     ITypeElement propertyTypeElement = declaredType.GetTypeElement();

@@ -4,7 +4,7 @@
                    default-access="field.pascalcase-underscore"
                    namespace="Examples" assembly="Examples" >
   <class name="Customer2" table="Example" >
-    <id name="Id" column="Ausgabe" type="System.Int64" access="field.pascalcase-underscore">
+    <id name="Id" column="Ausgabe" type="System.Int64" >
       <generator class="assigned" />
     </id>
 

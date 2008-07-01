@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:nhibernate-mapping-2.2" >
+  <class name="Examples.DerivedEntity, Examples" table="Example" >
+    <id name="Id" access="nosetter.camelcase-underscore" column="ID" type="Int32" unsaved-value="0">
+      <generator class="native" />
+    </id>
+
+    <property name="AnsiField" column="Name" type="AnsiString" access="property" />
+
+  </class>
+</hibernate-mapping>

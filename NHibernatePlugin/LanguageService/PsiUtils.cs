@@ -44,7 +44,7 @@ namespace NHibernatePlugin.LanguageService
             }
             IList<IDeclaredType> superTypes = typeElement.GetSuperTypes();
             foreach (IDeclaredType superType in superTypes) {
-                IAccessor accessor = GetPropertySetter(superType.GetTypeElement(), propertyName);
+                IAccessor accessor = GetPropertyGetter(superType.GetTypeElement(), propertyName);
                 if (accessor != null) {
                     return accessor;
                 }
@@ -166,6 +166,7 @@ namespace NHibernatePlugin.LanguageService
                 if ((declaredElements.Length == 1) && (declaredElements[0] is ITypeElement)) {
                     return (ITypeElement)declaredElements[0];
                 }
+                IDeclaredElement declaredElement = declarationsCache[className];
             }
             return typeElement;
         }
