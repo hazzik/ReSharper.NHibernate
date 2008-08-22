@@ -9,8 +9,8 @@ using NHibernatePlugin.Refactorings.Rename;
 
 namespace NHibernatePlugin.Refactorings
 {
-    [LanguageSpecificImplementation(MappingFileLanguageService.MAPPING_FILE_LANGUAGEID, typeof(RefactoringLanguageService))]
-    public class MappingFileRefactoringLanguageService : RefactoringLanguageService
+    [LanguageSpecificImplementation(MappingFileLanguageService.MAPPING_FILE_LANGUAGEID, typeof(InternalRefactoringLanguageService))]
+    public class MappingFileRefactoringLanguageService : InternalRefactoringLanguageService
     {
         public override RenameBase CreateRename(RenameWorkflow workflow, ISolution solution, IRefactoringDriver driver) {
             Logger.LogMessage("NHibernatePlugin: CreateRename called");
