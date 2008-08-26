@@ -163,8 +163,10 @@ namespace NHibernatePlugin.LanguageService
                 if ((declaredElements == null) || (declaredElements.IsEmpty())) {
                     declaredElements = declarationsCache.GetElementsAtQualifiedName(className);
                 }
-                if ((declaredElements.Length() == 1) && (declaredElements.GetAtIndex(0) is ITypeElement)) {
-                    return (ITypeElement)declaredElements.GetAtIndex(0);
+                if (declaredElements.Length() == 1) {
+                    foreach (var element in declaredElements) { // return first element
+                        return (ITypeElement)element;
+                    }
                 }
                 IDeclaredElement declaredElement = declarationsCache[className];
             }
