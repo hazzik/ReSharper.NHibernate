@@ -168,10 +168,13 @@
     <Compile Include="Analysis\MappingFile\MappingFileAnalysisElementProcessor.cs" />
     <Compile Include="Refactorings\MappingFileRefactoringLanguageService.cs" />
     <Compile Include="Refactorings\Rename\MappingFileRename.cs" />
-    <Compile Include="TypeParser\ISymbol.cs" />
-    <Compile Include="TypeParser\Scanner.cs" />
-    <Compile Include="TypeParser\ScannerException.cs" />
-    <Compile Include="TypeParser\Symbol.cs" />
+    <Compile Include="TypeNames\Parser\IParsedType.cs" />
+    <Compile Include="TypeNames\Scanners\IToken.cs" />
+    <Compile Include="TypeNames\Parser\ParsedType.cs" />
+    <Compile Include="TypeNames\Parser\Parser.cs" />
+    <Compile Include="TypeNames\Scanners\Scanner.cs" />
+    <Compile Include="TypeNames\Scanners\ScannerException.cs" />
+    <Compile Include="TypeNames\Scanners\Token.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

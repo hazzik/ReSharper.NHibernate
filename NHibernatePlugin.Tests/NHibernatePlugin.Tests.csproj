@@ -49,6 +49,7 @@
     <Compile Include="Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper\TypeNameParserTests.cs" />
+    <Compile Include="TypeParser\ParserTests.cs" />
     <Compile Include="TypeParser\ScannerTests.cs" />
   </ItemGroup>
   <ItemGroup>
