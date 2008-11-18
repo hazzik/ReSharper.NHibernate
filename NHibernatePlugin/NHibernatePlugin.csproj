@@ -169,6 +169,7 @@
     <Compile Include="Refactorings\MappingFileRefactoringLanguageService.cs" />
     <Compile Include="Refactorings\Rename\MappingFileRename.cs" />
     <Compile Include="TypeNames\Parser\IParsedType.cs" />
+    <Compile Include="TypeNames\Scanners\Extensions.cs" />
     <Compile Include="TypeNames\Scanners\IToken.cs" />
     <Compile Include="TypeNames\Parser\ParsedType.cs" />
     <Compile Include="TypeNames\Parser\Parser.cs" />

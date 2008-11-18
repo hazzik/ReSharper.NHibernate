@@ -9,7 +9,8 @@ namespace NHibernatePlugin.TypeNames.Scanners
             LeftBracket,
             RightBracket,
             Comma,
-            EOF
+            EOF,
+            Number
         };
 
         private readonly string input;
@@ -29,13 +30,19 @@ namespace NHibernatePlugin.TypeNames.Scanners
             }
             string tokenText = "";
 
-            if (char.IsLetter(PeekChar())) {
+            if (PeekChar().IsNameStartCharacter()) {
                 do {
                     tokenText += GetNextChar();
-                } while (!IndexIsEOF() && char.IsLetter(PeekChar()));
+                } while (!IndexIsEOF() && PeekChar().IsNameCharacter());
                 return new Token(TokenType.Name, tokenText);
             }
-            if ('´' == PeekChar()) {
+            if (char.IsDigit(PeekChar())) {
+                do {
+                    tokenText += GetNextChar();
+                } while (!IndexIsEOF() && char.IsDigit(PeekChar()));
+                return new Token(TokenType.Number, tokenText);
+            }
+            if ('`' == PeekChar()) {
                 tokenText += GetNextChar();
                 return new Token(TokenType.Accent, tokenText);
             }

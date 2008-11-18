@@ -10,31 +10,34 @@ namespace NHibernatePlugin.TypeNames.Parser
 
         public IParsedType Parse(string input) {
             scanner = new Scanner(input);
-            token = scanner.NextToken();
-            IParsedType parsedType = null;
-            if (token.TokenType == Scanner.TokenType.Name) {
-                parsedType = ParseType(token.Text);
-            }
+            IParsedType parsedType = ParseType();
             if (scanner.EOF) {
                 return parsedType;
             }
             throw new Exception();
         }
 
-        private IParsedType ParseType(string typeName) {
-            ParsedType parsedType = new ParsedType(typeName);
+        private IParsedType ParseType() {
+            ParsedType parsedType = null;
+
             token = scanner.NextToken();
-            if(token.TokenType == Scanner.TokenType.Accent) {
+            if (token.TokenType == Scanner.TokenType.Name) {
+                string typeName = token.Text;
                 token = scanner.NextToken();
-                if (token.TokenType == Scanner.TokenType.LeftBracket) {
+                if (token.TokenType != Scanner.TokenType.Accent) {
+                    return new ParsedType(typeName);
+                }
+                token = scanner.NextToken();
+                if (token.TokenType == Scanner.TokenType.Number) {
+                    parsedType = new ParsedType(typeName + "`" + token.Text);
                     token = scanner.NextToken();
-                    if (token.TokenType == Scanner.TokenType.Name) {
-                        parsedType.AddTypeParameter(ParseType(token.Text));
+                    if (token.TokenType == Scanner.TokenType.LeftBracket) {
+                        parsedType.AddTypeParameter(ParseType());
                         while (token.TokenType == Scanner.TokenType.Comma) {
+                            parsedType.AddTypeParameter(ParseType());
+                        }
+                        if (token.TokenType == Scanner.TokenType.RightBracket) {
                             token = scanner.NextToken();
-                            if (token.TokenType == Scanner.TokenType.Name) {
-                                parsedType.AddTypeParameter(ParseType(token.Text));
-                            }
                         }
                     }
                 }

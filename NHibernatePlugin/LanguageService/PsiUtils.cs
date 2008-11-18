@@ -168,7 +168,10 @@ namespace NHibernatePlugin.LanguageService
                         return (ITypeElement)element;
                     }
                 }
-                IDeclaredElement declaredElement = declarationsCache[className];
+                TypeNames.Parser.Parser parser = new TypeNames.Parser.Parser();
+                var parsedType = parser.Parse(className);
+                typeElement = declarationsCache.GetTypeElementByCLRName(parsedType.TypeName);
+                // TODO: parsedType.TypeParameters berücksichtigen
             }
             return typeElement;
         }
