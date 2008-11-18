@@ -2,7 +2,7 @@ using NHibernatePlugin.TypeNames.Scanners;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace NHibernatePlugin.Tests.TypeParser
+namespace NHibernatePlugin.Tests.TypeNames
 {
     [TestFixture]
     public class ScannerTests
@@ -22,14 +22,18 @@ namespace NHibernatePlugin.Tests.TypeParser
 
         [Test]
         public void Generic_type_with_one_parameter_is_scanned() {
-            sut = new Scanner("IList´[int]");
+            sut = new Scanner("IList`1[int]");
             result = sut.NextToken();
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Name));
             Assert.That(result.Text, Is.EqualTo("IList"));
 
             result = sut.NextToken();
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Accent));
-            Assert.That(result.Text, Is.EqualTo("´"));
+            Assert.That(result.Text, Is.EqualTo("`"));
+
+            result = sut.NextToken();
+            Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Number));
+            Assert.That(result.Text, Is.EqualTo("1"));
 
             result = sut.NextToken();
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.LeftBracket));
@@ -49,14 +53,18 @@ namespace NHibernatePlugin.Tests.TypeParser
 
         [Test]
         public void Generic_type_with_three_parameter_is_scanned() {
-            sut = new Scanner("IList´[int,char,string]");
+            sut = new Scanner("IList`1[int,char,string]");
             result = sut.NextToken();
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Name));
             Assert.That(result.Text, Is.EqualTo("IList"));
 
             result = sut.NextToken();
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Accent));
-            Assert.That(result.Text, Is.EqualTo("´"));
+            Assert.That(result.Text, Is.EqualTo("`"));
+
+            result = sut.NextToken();
+            Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Number));
+            Assert.That(result.Text, Is.EqualTo("1"));
 
             result = sut.NextToken();
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.LeftBracket));

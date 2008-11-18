@@ -4,6 +4,6 @@ see http://www.intellij.net/forums/thread.jspa?threadID=276057
 
 In this case you have to manually parse that given line, then get 
 ITypeElements via CLR name, and construct IType.
-For example, in you line "Examples.Wrapper`1http://Examples.Customer" there are 2 
+For example, in you line "Example.Wrapper`1[Example.Customer]" there are 2 
 type elements:
-Examples.Wrapper`1 and Examples.Customer
+Example.Wrapper`1 and Example.Customer
