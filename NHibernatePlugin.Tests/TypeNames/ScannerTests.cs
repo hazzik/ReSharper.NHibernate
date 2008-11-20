@@ -135,5 +135,13 @@ namespace NHibernatePlugin.Tests.TypeNames
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.EOF));
             Assert.That(sut.EOF);
         }
+
+        [Test]
+        public void Unknown_characters_are_returned_as_TokenType_Unknown() {
+            sut = new Scanner("'");
+            result = sut.NextToken();
+            Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Unknown));
+            Assert.That(result.Text, Is.EqualTo("'"));
+        }
     }
 }

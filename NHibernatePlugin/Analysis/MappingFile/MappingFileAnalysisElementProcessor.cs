@@ -11,6 +11,7 @@ using NHibernatePlugin.Helper;
 using NHibernatePlugin.Highlighting;
 using NHibernatePlugin.LanguageService;
 using NHibernatePlugin.LanguageService.Psi;
+using NHibernatePlugin.TypeNames.Parser;
 
 namespace NHibernatePlugin.Analysis.MappingFile
 {
@@ -343,6 +344,12 @@ namespace NHibernatePlugin.Analysis.MappingFile
 
             string fullQualifiedTypeName = attribute.UnquotedValue;
             Logger.LogMessage("Type is {0}", fullQualifiedTypeName);
+            Parser parser = new Parser();
+            IParserError error;
+            parser.Parse(fullQualifiedTypeName, out error);
+            if (error != ParserError.None) {
+                AddHighlighting(attribute, new TypeHighlighting(string.Format("Error in type: {0}", error.Message)));
+            }
             
             ITypeElement typeElement = PsiUtils.GetTypeElement(tag, m_Process.Solution, fullQualifiedTypeName);
             if ((typeElement == null) || (typeElement.Module == null)) {

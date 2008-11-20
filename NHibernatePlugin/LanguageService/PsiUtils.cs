@@ -172,8 +172,10 @@ namespace NHibernatePlugin.LanguageService
                 TypeNames.Parser.Parser parser = new TypeNames.Parser.Parser();
                 IParserError error;
                 var parsedType = parser.Parse(className, out error);
-                typeElement = declarationsCache.GetTypeElementByCLRName(parsedType.TypeName);
-                // TODO: parsedType.TypeParameters berücksichtigen
+                if (parsedType != null) {
+                    typeElement = declarationsCache.GetTypeElementByCLRName(parsedType.TypeName);
+                    // TODO: parsedType.TypeParameters berücksichtigen
+                }
             }
             return typeElement;
         }

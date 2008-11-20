@@ -176,7 +176,6 @@
     <Compile Include="TypeNames\Parser\ParsedType.cs" />
     <Compile Include="TypeNames\Parser\Parser.cs" />
     <Compile Include="TypeNames\Scanners\Scanner.cs" />
-    <Compile Include="TypeNames\Scanners\ScannerException.cs" />
     <Compile Include="TypeNames\Scanners\Token.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

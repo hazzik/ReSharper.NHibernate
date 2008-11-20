@@ -9,8 +9,9 @@ namespace NHibernatePlugin.TypeNames.Scanners
             LeftBracket,
             RightBracket,
             Comma,
-            EOF,
-            Number
+            Number,
+            Unknown,
+            EOF
         };
 
         private readonly string input;
@@ -63,7 +64,7 @@ namespace NHibernatePlugin.TypeNames.Scanners
                 return new Token(TokenType.Comma, tokenText);
             }
 
-            throw new ScannerException(string.Format("Unknown character {0}", PeekChar()));
+            return new Token(TokenType.Unknown, PeekChar().ToString());
         }
 
         private char PeekChar() {
