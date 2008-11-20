@@ -9,6 +9,7 @@ namespace NHibernatePlugin.Tests.TypeNames
     {
         private Parser sut;
         private IParsedType result;
+        private IParserError error;
 
         [SetUp]
         public void Setup() {
@@ -17,14 +18,16 @@ namespace NHibernatePlugin.Tests.TypeNames
 
         [Test]
         public void Simple_Type_is_parsed() {
-            result = sut.Parse("string");
+            result = sut.Parse("string", out error);
+            Assert.That(error, Is.EqualTo(ParserError.None));
             Assert.That(result.TypeName, Is.EqualTo("string"));
             Assert.That(result.TypeParameters, Is.Empty);
         }
 
         [Test]
         public void Generic_Type_with_one_parameter_is_parsed() {
-            result = sut.Parse("IEnumerable`1[string]");
+            result = sut.Parse("IEnumerable`1[string]", out error);
+            Assert.That(error, Is.EqualTo(ParserError.None));
             Assert.That(result.TypeName, Is.EqualTo("IEnumerable`1"));
             Assert.That(result.TypeParameters.Count, Is.EqualTo(1));
             Assert.That(result.TypeParameters[0].TypeName, Is.EqualTo("string"));
@@ -33,7 +36,8 @@ namespace NHibernatePlugin.Tests.TypeNames
 
         [Test]
         public void Generic_Type_with_three_parameter_is_parsed() {
-            result = sut.Parse("System.IEnumerable`2[System.string,int,Bla.Fasel42.Blub]");
+            result = sut.Parse("System.IEnumerable`2[System.string,int,Bla.Fasel42.Blub]", out error);
+            Assert.That(error, Is.EqualTo(ParserError.None));
             Assert.That(result.TypeName, Is.EqualTo("System.IEnumerable`2"));
             Assert.That(result.TypeParameters.Count, Is.EqualTo(3));
             Assert.That(result.TypeParameters[0].TypeName, Is.EqualTo("System.string"));
@@ -46,7 +50,8 @@ namespace NHibernatePlugin.Tests.TypeNames
 
         [Test]
         public void Generic_Type_with_one_generic_parameter_is_parsed() {
-            result = sut.Parse("IList`2[IList`1[string]]");
+            result = sut.Parse("IList`2[IList`1[string]]", out error);
+            Assert.That(error, Is.EqualTo(ParserError.None));
             Assert.That(result.TypeName, Is.EqualTo("IList`2"));
             Assert.That(result.TypeParameters.Count, Is.EqualTo(1));
             Assert.That(result.TypeParameters[0].TypeName, Is.EqualTo("IList`1"));
@@ -54,6 +59,34 @@ namespace NHibernatePlugin.Tests.TypeNames
 
             Assert.That(result.TypeParameters[0].TypeParameters[0].TypeName, Is.EqualTo("string"));
             Assert.That(result.TypeParameters[0].TypeParameters[0].TypeParameters, Is.Empty);
+        }
+
+        [Test]
+        public void Syntax_error_is_reported_on_simple_type() {
+            result = sut.Parse("string,", out error);
+            Assert.That(error.Message, Is.EqualTo("Unexpected token ','"));
+            Assert.That(error.Index, Is.EqualTo(6));
+        }
+
+        [Test]
+        public void Syntax_error_is_reported_on_generic_type_if_number_is_missing() {
+            result = sut.Parse("IList`[string]", out error);
+            Assert.That(error.Message, Is.EqualTo("Number expected"));
+            Assert.That(error.Index, Is.EqualTo(7));
+        }
+
+        [Test]
+        public void Syntax_error_is_reported_on_generic_type_if_second_simple_type_is_missing() {
+            result = sut.Parse("IList`1[string,]", out error);
+            Assert.That(error.Message, Is.EqualTo("Name expected"));
+            Assert.That(error.Index, Is.EqualTo(16));
+        }
+
+        [Test]
+        public void Syntax_error_is_reported_on_generic_type_if_simple_type_is_wrong() {
+            result = sut.Parse("IList`1[5]", out error);
+            Assert.That(error.Message, Is.EqualTo("Name expected"));
+            Assert.That(error.Index, Is.EqualTo(9));
         }
     }
 }

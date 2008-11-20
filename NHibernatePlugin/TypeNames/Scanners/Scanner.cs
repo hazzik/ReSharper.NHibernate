@@ -24,6 +24,10 @@ namespace NHibernatePlugin.TypeNames.Scanners
             get { return IndexIsEOF(); }
         }
 
+        public int CurrentIndex {
+            get { return nextIndex; }
+        }
+
         public IToken NextToken() {
             if (IndexIsEOF()) {
                 return new Token(TokenType.EOF, "");

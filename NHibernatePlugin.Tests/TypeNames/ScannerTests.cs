@@ -11,8 +11,38 @@ namespace NHibernatePlugin.Tests.TypeNames
         private Scanner sut;
 
         [Test]
+        public void CurrentIndex_starts_at_the_beginning_of_the_input() {
+            sut = new Scanner("string");
+            Assert.That(sut.CurrentIndex, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void CurrentIndex_is_advanced_on_getting_tokens() {
+            sut = new Scanner("IList`1[int]");
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(5));
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(6));
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(7));
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(8));
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(11));
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(12));
+        }
+
+        [Test]
         public void Simple_type_is_scanned() {
             sut = new Scanner("string");
+
             result = sut.NextToken();
             Assert.That(result.TokenType, Is.EqualTo(Scanner.TokenType.Name));
             Assert.That(result.Text, Is.EqualTo("string"));

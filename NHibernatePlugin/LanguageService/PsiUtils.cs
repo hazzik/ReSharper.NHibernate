@@ -9,6 +9,7 @@ using JetBrains.Util;
 using NHibernatePlugin.Helper;
 using NHibernatePlugin.LanguageService.Parser;
 using NHibernatePlugin.LanguageService.Psi;
+using NHibernatePlugin.TypeNames.Parser;
 
 namespace NHibernatePlugin.LanguageService
 {
@@ -169,7 +170,8 @@ namespace NHibernatePlugin.LanguageService
                     }
                 }
                 TypeNames.Parser.Parser parser = new TypeNames.Parser.Parser();
-                var parsedType = parser.Parse(className);
+                IParserError error;
+                var parsedType = parser.Parse(className, out error);
                 typeElement = declarationsCache.GetTypeElementByCLRName(parsedType.TypeName);
                 // TODO: parsedType.TypeParameters berücksichtigen
             }
