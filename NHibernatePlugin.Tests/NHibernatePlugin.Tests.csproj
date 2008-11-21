@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Vendor\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Vendor\nunit.framework.dll</HintPath>
@@ -49,6 +53,11 @@
     <Compile Include="Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper\TypeNameParserTests.cs" />
+    <Compile Include="TestCases\WithoutErrors\AnsiStringClass.cs" />
+    <Compile Include="TestCases\WithoutErrors\BaseClassWithId.cs" />
+    <Compile Include="TestCases\WithoutErrors\BinaryClass.cs" />
+    <Compile Include="TestCases\WithoutErrors\BooleanClass.cs" />
+    <Compile Include="TestCases\WithoutErrors\MappingTests.cs" />
     <Compile Include="TypeNames\ParserTests.cs" />
     <Compile Include="TypeNames\ScannerTests.cs" />
   </ItemGroup>
@@ -67,6 +76,15 @@
       <Project>{14EB84EE-4D39-41ED-BACF-46397505504E}</Project>
       <Name>NHibernatePlugin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestCases\WithoutErrors\BinaryClass.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestCases\WithoutErrors\AnsiStringClass.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestCases\WithoutErrors\BooleanClass.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

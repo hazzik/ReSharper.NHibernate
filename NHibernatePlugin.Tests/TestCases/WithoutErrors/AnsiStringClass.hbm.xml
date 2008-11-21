@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="NHibernatePlugin.Tests.TestCases.WithoutErrors.AnsiStringClass, NHibernatePlugin.Tests" lazy="false" >
+    <id name="Id" >
+      <generator class="assigned" />
+    </id>
+
+    <property name="AnsiString" type="AnsiString" />
+  </class>
+</hibernate-mapping>
