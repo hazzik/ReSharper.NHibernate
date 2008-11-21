@@ -140,6 +140,7 @@ namespace NHibernatePlugin.LanguageService
         }
 
         private static ITypeElement GetTypeElement(ISolution solution, string fullQualifiedTypeName, string assembly, string @namespace) {
+            fullQualifiedTypeName = ClrNameFromNHibernateSpecialName(fullQualifiedTypeName);
             TypeNameParser typeNameParser = new TypeNameParser(fullQualifiedTypeName, assembly, @namespace);
             if (string.IsNullOrEmpty(typeNameParser.TypeName)) {
                 return null;
@@ -166,6 +167,28 @@ namespace NHibernatePlugin.LanguageService
             return null;
         }
 
+        private static string ClrNameFromNHibernateSpecialName(string fullQualifiedTypeName) {
+            switch(fullQualifiedTypeName) {
+                case "AnsiChar":
+                    return "System.Char";
+                case "TrueFalse":
+                    return "System.Boolean";
+                case "YesNo":
+                    return "System.Boolean";
+                case "AnsiString":
+                    return "System.String";
+                case "StringClob":
+                    return "System.String";
+                case "CultureInfo":
+                    return "System.Globalization.CultureInfo";
+                case "Binary":
+                    return "System.Byte[]";
+                case "BinaryBlob":
+                    return "System.Byte[]";
+            }
+            return fullQualifiedTypeName;
+        }
+
         private static ITypeElement GetTypeElement(string className, IDeclarationsCache declarationsCache) {
             ITypeElement typeElement = declarationsCache.GetTypeElementByCLRName(className);
             if (typeElement == null) {
@@ -175,7 +198,7 @@ namespace NHibernatePlugin.LanguageService
                 }
                 if (declaredElements.Length() == 1) {
                     foreach (var element in declaredElements) { // return first element
-                        return (ITypeElement)element;
+                        return element as ITypeElement;
                     }
                 }
             }

@@ -72,6 +72,9 @@ namespace NHibernatePlugin.TypeNames.Scanners
         }
 
         private char PeekChar() {
+            if (IndexIsEOF()) {
+                return new char();
+            }
             return input[nextIndex];
         }
 

@@ -132,5 +132,12 @@ namespace NHibernatePlugin.Tests.TypeNames
             Assert.That(error.Message, Is.EqualTo("Name expected"));
             Assert.That(error.Index, Is.EqualTo(18));
         }
+
+        [Test]
+        public void Syntax_error_is_reported_if_assembly_name_is_missing_with_trailing_whitespace() {
+            result = sut.Parse("string,     ", out error);
+            Assert.That(error.Message, Is.EqualTo("Name expected"));
+            Assert.That(error.Index, Is.EqualTo(12));
+        }
     }
 }

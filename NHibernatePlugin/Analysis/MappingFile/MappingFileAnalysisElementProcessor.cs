@@ -357,6 +357,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
                 AddHighlighting(attribute, new TypeHighlighting(string.Format("Type '{0}' could not be resolved", fullQualifiedTypeName)));
             }
             else {
+                // TODO: put TypeNameParser into Parser and refactor this
                 TypeNameParser typeNameParser = new TypeNameParser(fullQualifiedTypeName, m_Assembly, m_Namespace);
                 string assemblyName = typeNameParser.AssemblyName;
                 if (typeElement.Module.Name != "mscorlib") {
