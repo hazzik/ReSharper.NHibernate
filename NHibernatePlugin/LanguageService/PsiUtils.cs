@@ -147,6 +147,15 @@ namespace NHibernatePlugin.LanguageService
 
             PsiManager psiManager = PsiManager.GetInstance(solution);
             IDeclarationsCache declarationsCache = psiManager.GetDeclarationsCache(DeclarationsCacheScope.SolutionScope(solution, true), true);
+
+            TypeNames.Parser.Parser parser = new TypeNames.Parser.Parser();
+            IParserError error;
+            var parsedType = parser.Parse(fullQualifiedTypeName, out error);
+            if (parsedType != null) {
+                var theTypeElement = GetTypeElement(parsedType.TypeName, declarationsCache);
+                // TODO: parsedType.TypeParameters berücksichtigen
+            }
+
             ITypeElement typeElement = GetTypeElement(typeNameParser.QualifiedTypeName, declarationsCache);
             if (typeElement != null) {
                 return typeElement;
@@ -168,13 +177,6 @@ namespace NHibernatePlugin.LanguageService
                     foreach (var element in declaredElements) { // return first element
                         return (ITypeElement)element;
                     }
-                }
-                TypeNames.Parser.Parser parser = new TypeNames.Parser.Parser();
-                IParserError error;
-                var parsedType = parser.Parse(className, out error);
-                if (parsedType != null) {
-                    typeElement = declarationsCache.GetTypeElementByCLRName(parsedType.TypeName);
-                    // TODO: parsedType.TypeParameters berücksichtigen
                 }
             }
             return typeElement;

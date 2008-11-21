@@ -6,5 +6,6 @@ namespace NHibernatePlugin.TypeNames.Parser
     {
         string TypeName { get; }
         IList<IParsedType> TypeParameters { get; }
+        string AssemblyName { get; set; }
     }
 }

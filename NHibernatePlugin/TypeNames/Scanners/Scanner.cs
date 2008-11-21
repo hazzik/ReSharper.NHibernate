@@ -35,6 +35,10 @@ namespace NHibernatePlugin.TypeNames.Scanners
             }
             string tokenText = "";
 
+            while(PeekChar().IsWhiteSpace()) {
+                GetNextChar();
+            }
+
             if (PeekChar().IsNameStartCharacter()) {
                 do {
                     tokenText += GetNextChar();

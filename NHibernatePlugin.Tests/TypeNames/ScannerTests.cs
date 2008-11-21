@@ -18,7 +18,7 @@ namespace NHibernatePlugin.Tests.TypeNames
 
         [Test]
         public void CurrentIndex_is_advanced_on_getting_tokens() {
-            sut = new Scanner("IList`1[int]");
+            sut = new Scanner("IList`1[int,char]");
 
             result = sut.NextToken();
             Assert.That(sut.CurrentIndex, Is.EqualTo(5));
@@ -37,6 +37,12 @@ namespace NHibernatePlugin.Tests.TypeNames
 
             result = sut.NextToken();
             Assert.That(sut.CurrentIndex, Is.EqualTo(12));
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(16));
+
+            result = sut.NextToken();
+            Assert.That(sut.CurrentIndex, Is.EqualTo(17));
         }
 
         [Test]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.ProjectModel;
+using JetBrains.ProjectModel.Build;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Caches;
@@ -358,8 +359,14 @@ namespace NHibernatePlugin.Analysis.MappingFile
             else {
                 TypeNameParser typeNameParser = new TypeNameParser(fullQualifiedTypeName, m_Assembly, m_Namespace);
                 string assemblyName = typeNameParser.AssemblyName;
-                if ((typeElement.Module.Name != "mscorlib") && (typeElement.Module.Name != assemblyName)) {
-                    AddHighlighting(attribute, new TypeHighlighting(string.Format("Assembly name '{0}' should be '{1}'", assemblyName, typeElement.Module.Name)));
+                if (typeElement.Module.Name != "mscorlib") {
+                    BuildSettingsManager buildSettingsManager = BuildSettingsManager.GetInstance(typeElement.GetProjectFiles()[0].GetProject());
+                    if (buildSettingsManager != null) {
+                        IAssemblyFile outputAssemblyFile = buildSettingsManager.GetOutputAssemblyFile();
+                        if ((outputAssemblyFile != null) && (outputAssemblyFile.Name != assemblyName)) {
+                            AddHighlighting(attribute, new TypeHighlighting(string.Format("Assembly name '{0}' should be '{1}'", assemblyName, outputAssemblyFile.Name)));
+                        }
+                    }
                 }
             }
             return typeElement;
