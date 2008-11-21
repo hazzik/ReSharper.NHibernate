@@ -12,18 +12,27 @@ namespace NHibernatePlugin.TypeNames.Parser
 
         private Scanner scanner;
         private IToken token;
+        private IParserError error;
 
-        public IParsedType Parse(string input, out IParserError error) {
+        public IParsedType Parse(string input, out IParserError anError) {
             scanner = new Scanner(input);
-            return ParseTypeAndAssemblyName(out error);
+            error = ParserError.None;
+            var parsedType = ParseTypeAndAssemblyName();
+            anError = error;
+            return parsedType;
         }
 
-        private IParsedType ParseTypeAndAssemblyName(out IParserError error) {
-            IParsedType parsedType = ParseType(out error);
+        private IParsedType ParseTypeAndAssemblyName() {
+            IParsedType parsedType = ParseType();
             if (error != ParserError.None) {
                 return null;
             }
-            ParseAssemblyName(parsedType, out error);
+            
+            ParseAssemblyName(parsedType);
+            if (error != ParserError.None) {
+                return null;
+            }
+
             if (!scanner.EOF || token.TokenType != Scanner.TokenType.EOF) {
                 error = ParserError.Error(string.Format(UnexpectedToken, token.Text), scanner.CurrentIndex - token.Text.Length);
                 return null;
@@ -31,9 +40,62 @@ namespace NHibernatePlugin.TypeNames.Parser
             return parsedType;
         }
 
-        private void ParseAssemblyName(IParsedType parsedType, out IParserError error) {
+        private IParsedType ParseType() {
+            token = scanner.NextToken();
+            if (token.TokenType != Scanner.TokenType.Name) {
+                error = ParserError.Error(NameExpected, scanner.CurrentIndex);
+                return null;
+            }
+            string typeName = token.Text;
+
+            token = scanner.NextToken();
+            if (token.TokenType != Scanner.TokenType.Accent) {
+                return new ParsedType(typeName);
+            }
+            return ParseGenericType(typeName);
+        }
+
+        private IParsedType ParseGenericType(string typeName) {
+            token = scanner.NextToken();
+            if (token.TokenType != Scanner.TokenType.Number) {
+                error = ParserError.Error(NumberExpected, scanner.CurrentIndex);
+                return null;
+            }
+            var parsedType = new ParsedType(typeName + "`" + token.Text);
+
+            token = scanner.NextToken();
+            if (token.TokenType != Scanner.TokenType.LeftBracket) {
+                error = ParserError.Error(LeftBracketExpected, scanner.CurrentIndex);
+                return null;
+            }
+            ParseGenericTypeParameter(parsedType);
+            if (error != ParserError.None) {
+                return null;
+            }
+
+            if (token.TokenType != Scanner.TokenType.RightBracket) {
+                error = ParserError.Error(RightBracketExpected, scanner.CurrentIndex);
+                return null;
+            }
+            token = scanner.NextToken();
+            return parsedType;
+        }
+
+        private void ParseGenericTypeParameter(ParsedType parsedType) {
+            parsedType.AddTypeParameter(ParseType());
+            if (error != ParserError.None) {
+                return;
+            }
+            while (token.TokenType == Scanner.TokenType.Comma) {
+                parsedType.AddTypeParameter(ParseType());
+                if (error != ParserError.None) {
+                    return;
+                }
+            }
+        }
+
+        private void ParseAssemblyName(IParsedType parsedType) {
             if (token.TokenType != Scanner.TokenType.Comma) {
-                error = ParserError.None;
                 return;
             }
             token = scanner.NextToken();
@@ -43,55 +105,6 @@ namespace NHibernatePlugin.TypeNames.Parser
             }
             parsedType.AssemblyName = token.Text;
             token = scanner.NextToken();
-            error = ParserError.None;
-        }
-
-        private IParsedType ParseType(out IParserError error) {
-            token = scanner.NextToken();
-            if (token.TokenType != Scanner.TokenType.Name) {
-                error = ParserError.Error(NameExpected, scanner.CurrentIndex);
-                return null;
-            }
-            string typeName = token.Text;
-            ParsedType parsedType;
-
-            token = scanner.NextToken();
-            if (token.TokenType != Scanner.TokenType.Accent) {
-                parsedType = new ParsedType(typeName);
-            }
-            else {
-                token = scanner.NextToken();
-                if (token.TokenType != Scanner.TokenType.Number) {
-                    error = ParserError.Error(NumberExpected, scanner.CurrentIndex);
-                    return null;
-                }
-                parsedType = new ParsedType(typeName + "`" + token.Text);
-
-                token = scanner.NextToken();
-                if (token.TokenType != Scanner.TokenType.LeftBracket) {
-                    error = ParserError.Error(LeftBracketExpected, scanner.CurrentIndex);
-                    return null;
-                }
-                parsedType.AddTypeParameter(ParseType(out error));
-                if (error != ParserError.None) {
-                    return null;
-                }
-                while (token.TokenType == Scanner.TokenType.Comma) {
-                    parsedType.AddTypeParameter(ParseType(out error));
-                    if (error != ParserError.None) {
-                        return null;
-                    }
-                }
-
-                if (token.TokenType != Scanner.TokenType.RightBracket) {
-                    error = ParserError.Error(RightBracketExpected, scanner.CurrentIndex);
-                    return null;
-                }
-                token = scanner.NextToken();
-            }
-
-            error = ParserError.None;
-            return parsedType;
         }
     }
 }

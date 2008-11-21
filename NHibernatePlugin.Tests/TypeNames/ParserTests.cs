@@ -125,5 +125,12 @@ namespace NHibernatePlugin.Tests.TypeNames
             Assert.That(error.Message, Is.EqualTo("Name expected"));
             Assert.That(error.Index, Is.EqualTo(9));
         }
+
+        [Test]
+        public void Syntax_error_is_reported_on_generic_type_if_assembly_name_is_wrong() {
+            result = sut.Parse("IList`1[string], 4", out error);
+            Assert.That(error.Message, Is.EqualTo("Name expected"));
+            Assert.That(error.Index, Is.EqualTo(18));
+        }
     }
 }
