@@ -139,5 +139,13 @@ namespace NHibernatePlugin.Tests.TypeNames
             Assert.That(error.Message, Is.EqualTo("Name expected"));
             Assert.That(error.Index, Is.EqualTo(12));
         }
+
+        [Test]
+        public void Array_type_is_parsed() {
+            result = sut.Parse("System.Byte[]", out error);
+            Assert.That(error, Is.EqualTo(ParserError.None), error.Message);
+            Assert.That(result.TypeName, Is.EqualTo("System.Byte[]"));
+            Assert.That(result.TypeParameters.Count, Is.EqualTo(0));
+        }
     }
 }

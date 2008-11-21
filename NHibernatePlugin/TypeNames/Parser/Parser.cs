@@ -50,9 +50,22 @@ namespace NHibernatePlugin.TypeNames.Parser
 
             token = scanner.NextToken();
             if (token.TokenType != Scanner.TokenType.Accent) {
-                return new ParsedType(typeName);
+                return ParseSimpleOrArrayType(typeName);
             }
             return ParseGenericType(typeName);
+        }
+
+        private IParsedType ParseSimpleOrArrayType(string typeName) {
+            if (token.TokenType == Scanner.TokenType.LeftBracket) {
+                token = scanner.NextToken();
+                if (token.TokenType != Scanner.TokenType.RightBracket) {
+                    error = ParserError.Error(RightBracketExpected, scanner.CurrentIndex);
+                    return null;
+                }
+                typeName += "[]";
+                token = scanner.NextToken();
+            }
+            return new ParsedType(typeName);
         }
 
         private IParsedType ParseGenericType(string typeName) {

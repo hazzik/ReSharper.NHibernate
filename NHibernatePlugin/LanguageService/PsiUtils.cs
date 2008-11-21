@@ -190,6 +190,7 @@ namespace NHibernatePlugin.LanguageService
         }
 
         private static ITypeElement GetTypeElement(string className, IDeclarationsCache declarationsCache) {
+            // TODO: array type (System.Byte[])
             ITypeElement typeElement = declarationsCache.GetTypeElementByCLRName(className);
             if (typeElement == null) {
                 IEnumerable<IDeclaredElement> declaredElements = declarationsCache.GetElementsByShortName(className);
