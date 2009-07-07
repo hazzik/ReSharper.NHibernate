@@ -86,6 +86,11 @@ namespace NHibernatePlugin.LanguageService
         }
 
         private static ITypeElement GetTypeElement(ISolution solution, IXmlTag classTag, string attributeName) {
+            // Added by Melle Koning 20090707 to prevent a null-ref exception
+            if (classTag == null)
+            {
+                return null;
+            }
             IXmlAttribute nameAttribute = classTag.GetAttribute(attributeName);
             if ((nameAttribute == null) || (nameAttribute.UnquotedValue == null)) {
                 return null;
