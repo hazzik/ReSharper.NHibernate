@@ -20,7 +20,7 @@ namespace NHibernatePlugin.LanguageService
         public MappingFileReferenceSearcher(IEnumerable<IDeclaredElement> elements, FindResultConsumer consumer) {
             Logger.LogMessage("MappingFileReferenceSearcher ctor");
             m_Consumer = consumer;
-            foreach (IDeclaredElement element in elements) {
+            foreach (var element in elements) {
                 m_Elements.Add(element);
                 m_ElementNames.Add(element.ShortName);
                 Logger.LogMessage("  Accessability domain {0}", element.GetAccessibilityDomain());
@@ -36,7 +36,7 @@ namespace NHibernatePlugin.LanguageService
         }
 
         public bool ProcessElement(ITreeNode element) {
-            return (new ReferenceSearchSourceFileProcessor(this, element.ToTreeNode()).Run() == FindExecution.Stop);
+            return (new ReferenceSearchSourceFileProcessor(element, this).Run() == FindExecution.Stop);
         }
 
         public bool ProcessProjectItem(IProjectFile projectItem) {

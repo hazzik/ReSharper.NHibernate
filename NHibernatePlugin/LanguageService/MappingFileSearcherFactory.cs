@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Application;
 using JetBrains.Application.Components;
-using JetBrains.ComponentModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.ExtensionsAPI;
-using JetBrains.ReSharper.Psi.Resolve;
+using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
 using JetBrains.ReSharper.Psi.Search;
 using JetBrains.Util;
 using NHibernatePlugin.Helper;
@@ -14,7 +13,7 @@ using NHibernatePlugin.Helper;
 namespace NHibernatePlugin.LanguageService
 {
     [ShellComponent(ProgramConfigurations.ALL)]
-    public class MappingFileSearcherFactory : IDomainSpecificSearcherFactory, IShellComponent
+    public class MappingFileSearcherFactory : IDomainSpecificSearcherFactory
     {
         private static readonly IDomainSpecificSearcherFactory s_Instance = new MappingFileSearcherFactory();
 

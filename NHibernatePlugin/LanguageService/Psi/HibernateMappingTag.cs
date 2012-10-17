@@ -1,27 +1,26 @@
 using JetBrains.ReSharper.Psi.Xml.Impl.Tree;
 using JetBrains.ReSharper.Psi.Xml.Tree;
 using JetBrains.Util;
-using NHibernatePlugin.LanguageService.Parser;
 
 namespace NHibernatePlugin.LanguageService.Psi
 {
     public class HibernateMappingTag : XmlTag
     {
-        public HibernateMappingTag() 
-            : base(MappingFileElementType.HIBERNATE_MAPPING) {
+        public HibernateMappingTag(XmlCompositeNodeType type)
+            : base(type) {
             Logger.LogMessage("HibernateMappingTag ctor");
         }
 
         public IXmlAttribute GetAssemblyAttribute() {
-            return GetAttribute("assembly");
+            return this.GetAttribute("assembly");
         }
 
         public IXmlAttribute GetNamespaceAttribute() {
-            return GetAttribute("namespace");
+            return this.GetAttribute("namespace");
         }
 
         public IXmlAttribute GetDefaultAccessAttribute() {
-            return GetAttribute("default-access");
+            return this.GetAttribute("default-access");
         }
     }
 }

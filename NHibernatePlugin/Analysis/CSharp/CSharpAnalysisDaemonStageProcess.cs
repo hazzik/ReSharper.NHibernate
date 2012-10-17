@@ -28,14 +28,12 @@ namespace NHibernatePlugin.Analysis.CSharp
             }
 
             // Running visitor against the PSI
-            CSharpAnalysisElementProcessor elementProcessor = new CSharpAnalysisElementProcessor(m_DaemonProcess);
+            var elementProcessor = new CSharpAnalysisElementProcessor(m_DaemonProcess);
             file.ProcessDescendants(elementProcessor);
 
             // Checking if the daemon is interrupted by user activity
             if (m_DaemonProcess.InterruptFlag)
-            {
                 throw new ProcessCancelledException();
-            }
 
             commiter(new DaemonStageResult(elementProcessor.Highlightings));
         }

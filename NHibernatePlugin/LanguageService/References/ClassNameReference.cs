@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Resolve;
 using JetBrains.ReSharper.Psi.Resolve;
+using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Xml.Impl.Tree.References;
 using JetBrains.ReSharper.Psi.Xml.Impl.Util;
 using JetBrains.ReSharper.Psi.Xml.Parsing;
@@ -14,7 +15,7 @@ namespace NHibernatePlugin.LanguageService.References
 {
     public class ClassNameReference : XmlReferenceWithTokenBase<ClassNameAttribute>
     {
-        public ClassNameReference(ClassNameAttribute owner, IXmlToken token, TextRange rangeWithin)
+        public ClassNameReference(ClassNameAttribute owner, IXmlToken token, TreeTextRange rangeWithin)
             : base(owner, token, rangeWithin) {
         }
 
@@ -26,9 +27,9 @@ namespace NHibernatePlugin.LanguageService.References
             get { return MappingFileElementFactory.Instance; }
         }
 
-        public override string[] GetAllNames() {
+        public override IEnumerable<string> GetAllNames() {
             Logger.LogMessage("GetAllNames for {0}/{1}", GetElement().GetType(), GetElement().GetText());
-            ClassNameAttribute classNameAttribute = GetElement() as ClassNameAttribute;
+            var classNameAttribute = GetElement();
             if ((classNameAttribute == null) || (classNameAttribute.UnquotedValue == null)) {
                 return base.GetAllNames();
             }
@@ -37,7 +38,7 @@ namespace NHibernatePlugin.LanguageService.References
 
         public override ISymbolTable GetReferenceSymbolTable(bool useReferenceName) {
             Logger.LogMessage("GetReferenceSymbolTable {0} for {1}/{2}", useReferenceName, GetElement().GetType(), GetElement().GetText());
-            ClassNameAttribute classNameAttribute = GetElement() as ClassNameAttribute;
+            var classNameAttribute = GetElement();
             if ((classNameAttribute == null) || (classNameAttribute.UnquotedValue == null)) {
                 return EmptySymbolTable.INSTANCE;
             }
@@ -57,13 +58,13 @@ namespace NHibernatePlugin.LanguageService.References
             if (subclassTag != null) {
                 return GetReferenceSymbolTable(subclassTag, classNameAttribute);
             }
-            ClassTag parentClass = classNameAttribute.GetContainingElement<ClassTag>(true);
+            ClassTag parentClass = ((ITreeNode)classNameAttribute).GetContainingNode<ClassTag>(true);
             return GetReferenceSymbolTable(parentClass, classNameAttribute);
         }
 
         private string[] GetAllNames(IXmlAttribute classNameAttribute) {
             IList<string> result = new List<string>();
-            IXmlTag containingElement = classNameAttribute.GetContainingElement<IXmlTag>(true);
+            IXmlTag containingElement = classNameAttribute.GetContainingNode<IXmlTag>(true);
             ITypeElement typeElement = PsiUtils.GetTypeElement(containingElement, GetProject().GetSolution(), classNameAttribute.UnquotedValue);
             if (typeElement != null) {
                 Logger.LogMessage("  type found: {0}", typeElement.ShortName);
@@ -83,11 +84,11 @@ namespace NHibernatePlugin.LanguageService.References
             return symbolTable;
         }
 
-        protected override IReference BindToInternal(IDeclaredElement element) {
+        protected override IReference BindToInternal(IDeclaredElement element, ISubstitution substitution) {
             string name;
             IClass klass = element as IClass;
             if (klass != null) {
-                ClassNameAttribute classNameAttribute = GetElement() as ClassNameAttribute;
+                ClassNameAttribute classNameAttribute = GetElement();
                 if ((classNameAttribute != null) && (classNameAttribute.UnquotedValue != null) &&
                         (classNameAttribute.UnquotedValue.Contains(".") || classNameAttribute.UnquotedValue.Contains(","))) {
                     name = klass.CLRName;

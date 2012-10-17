@@ -1,8 +1,9 @@
 using JetBrains.ReSharper.Daemon;
+using NHibernatePlugin.LanguageService;
 
 namespace NHibernatePlugin.Highlighting
 {
-    [ConfigurableSeverityHighlighting(Id, OverlapResolve = OverlapResolveKind.ERROR, ShowToolTipInStatusBar = true)]
+    [ConfigurableSeverityHighlighting(Id, HbmXmlLanguage.Name, OverlapResolve = OverlapResolveKind.ERROR, ShowToolTipInStatusBar = true)]
     public class AccessHighlighting : Highlighting
     {
         public const string Id = "NHibernatePlugin.Access";

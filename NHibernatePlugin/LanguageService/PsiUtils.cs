@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Caches;
+using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Util;
 using JetBrains.ReSharper.Psi.Xml.Impl.Tree;
 using JetBrains.ReSharper.Psi.Xml.Tree;
@@ -134,7 +135,7 @@ namespace NHibernatePlugin.LanguageService
 
         private static IEnumerable<IField> GetFields(ITypeElement typeElement) {
             IList<IField> result = new List<IField>();
-            IEnumerable<TypeMemberInstance> members = MiscUtil.GetAllClassMembers(typeElement);
+            IEnumerable<TypeMemberInstance> members = typeElement.GetAllClassMembers();
             foreach (TypeMemberInstance member in members) {
                 IField field = member.Element as IField;
                 if (field != null) {
@@ -216,7 +217,7 @@ namespace NHibernatePlugin.LanguageService
             Logger.LogMessage("GetField {0} ({1})", fieldName, attributeName);
 
             AccessMethod access = null;
-            XmlTag xmlTag = propertyNameAttribute.GetContainingElement<XmlTag>(true);
+            XmlTag xmlTag = ((ITreeNode)propertyNameAttribute).GetContainingNode<XmlTag>(true);
             if (xmlTag != null) {
                 IXmlAttribute accessAttribute = xmlTag.GetAttribute("access");
                 if (accessAttribute != null) {
@@ -267,10 +268,10 @@ namespace NHibernatePlugin.LanguageService
         }
 
         private static T Parent<T>(NameAttribute nameAttribute, string keyword) where T : IXmlTag {
-            T subclassTag = nameAttribute.GetContainingElement<T>(false);
+            T subclassTag = ((ITreeNode)nameAttribute).GetContainingNode<T>(false);
             if (subclassTag != null) {
                 if (nameAttribute.ContainerName == keyword) {
-                    subclassTag = subclassTag.GetContainingElement<T>(false);
+                    subclassTag = subclassTag.GetContainingNode<T>(false);
                 }
             }
             return subclassTag;

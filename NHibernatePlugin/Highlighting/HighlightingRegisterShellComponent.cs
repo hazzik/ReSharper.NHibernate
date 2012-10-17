@@ -1,13 +1,11 @@
 using JetBrains.Application;
 using JetBrains.Application.Components;
-using JetBrains.ComponentModel;
 using JetBrains.ReSharper.Daemon;
-using NHibernatePlugin.Highlighting;
 
 namespace NHibernatePlugin.Highlighting
 {
-    [ShellComponentImplementation, ShellComponentInterface(ProgramConfigurations.ALL)]
-    public class HighlightingRegisterShellComponent : IShellComponent
+    [ShellComponent(ProgramConfigurations.ALL)]
+    public class HighlightingRegisterShellComponent
     {
         private const string GroupNHibernateMappings = "NHibernate Mappings";
 

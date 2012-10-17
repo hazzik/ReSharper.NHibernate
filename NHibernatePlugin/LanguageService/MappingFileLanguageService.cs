@@ -1,54 +1,44 @@
 using JetBrains.Application;
 using JetBrains.Application.Components;
-using JetBrains.ProjectModel;
+using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
 using JetBrains.ReSharper.Psi.Parsing;
-using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Xml;
+using JetBrains.ReSharper.Psi.Xml.Impl;
+using JetBrains.ReSharper.Psi.Xml.Impl.CodeStyle;
+using JetBrains.ReSharper.Psi.Xml.Parsing;
 using JetBrains.Util;
 using NHibernatePlugin.LanguageService.Parser;
 
 namespace NHibernatePlugin.LanguageService
 {
-    [LanguageService, ShellComponentInterface(ProgramConfigurations.ALL), ShellComponentImplementation]
-    public class MappingFileLanguageService : XmlLanguageServiceBase, IShellComponent
+    [Language(typeof(HbmXmlLanguage)), ShellComponent(ProgramConfigurations.ALL)]
+    public class MappingFileLanguageService : XmlLanguageServiceBase
     {
-        public static PsiLanguageType MAPPING_FILE = new PsiLanguageType("MappingFile");
-        public const string MAPPING_FILE_LANGUAGEID = "MappingFile";
-
-        public MappingFileLanguageService()
-            : base(MAPPING_FILE) {
+        public MappingFileLanguageService(HbmXmlLanguage xmlLanguage, IConstantValueService constantValueService, XmlTokenTypes tokenTypes, IXmlElementFactory elementFactory, XmlCodeFormatter codeFormatter, ISettingsStore settingsStore)
+            : base(xmlLanguage, constantValueService, tokenTypes, elementFactory, codeFormatter, settingsStore) {
             Logger.LogMessage("NHibernatePlugin: MappingFileLanguageService ctor");
         }
 
-        public override IParser CreateParser(ILexer lexer, ISolution solution, IProject project, CheckForInterrupt checkForInterrupt) {
-            return new MappingFileParser(lexer, checkForInterrupt);
+        public override IParser CreateParser(ILexer lexer, IPsiModule module, IPsiSourceFile sourceFile) {
+            return new MappingFileParser(lexer, ElementFactory);
         }
 
-        public override bool ShouldInvalidatePsiCache(ITreeNode element, PsiChangedElementType elementType) {
-            return true;
-        }
-        public override ILanguageSpecificSearcherFactory LanguageSpecificSearcherFactory {
-            get { return MappingFileSearcherFactory.Instance; }
+        public override IWordIndexLanguageProvider WordIndexLanguageProvider {
+            get { return new XmlWordIndexLanguageProvider(); }
         }
 
         public override ILanguageCacheProvider CacheProvider {
-            get { return new MappingFileLanguageCacheProvider(MAPPING_FILE); }
+            get { return new MappingFileLanguageCacheProvider(LanguageType); }
+        }
+
+        public override bool SupportTypeMemberCache {
+            get { return false; }
         }
 
         public override ITypePresenter TypePresenter {
             get { return MappingFileTypePresenter.Instance; }
-        }
-
-        public override PsiLanguageType LanguageType {
-            get { return MAPPING_FILE; }
-        }
-
-        public void Init() {
-        }
-
-        public void Dispose() {
         }
     }
 }

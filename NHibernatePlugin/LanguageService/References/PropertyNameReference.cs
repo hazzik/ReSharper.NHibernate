@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Resolve;
 using JetBrains.ReSharper.Psi.Resolve;
@@ -28,7 +29,7 @@ namespace NHibernatePlugin.LanguageService.References
 
         public override IEnumerable<string> GetAllNames() {
             Logger.LogMessage("GetAllNames for {0}/{1}", GetElement().GetType(), GetElement().GetText());
-            PropertyNameAttribute propertyNameAttribute = GetElement() as PropertyNameAttribute;
+            PropertyNameAttribute propertyNameAttribute = GetElement();
             if ((propertyNameAttribute == null) || (propertyNameAttribute.UnquotedValue == null)) {
                 return base.GetAllNames();
             }
@@ -48,13 +49,13 @@ namespace NHibernatePlugin.LanguageService.References
             if (subclassTag != null) {
                 return GetAllNames(subclassTag, propertyNameAttribute, "name");
             }
-            ClassTag parentClass = propertyNameAttribute.GetContainingElement<ClassTag>(true);
+            ClassTag parentClass = propertyNameAttribute.GetContainingNode<ClassTag>(true);
             return GetAllNames(parentClass, propertyNameAttribute, "name");
         }
 
         public override ISymbolTable GetReferenceSymbolTable(bool useReferenceName) {
             Logger.LogMessage("GetReferenceSymbolTable {0} for {1}/{2}", useReferenceName, GetElement().GetType(), GetElement().GetText());
-            PropertyNameAttribute propertyNameAttribute = GetElement() as PropertyNameAttribute;
+            PropertyNameAttribute propertyNameAttribute = GetElement();
             if ((propertyNameAttribute == null) || (propertyNameAttribute.UnquotedValue == null)) {
                 return EmptySymbolTable.INSTANCE;
             }
@@ -74,7 +75,7 @@ namespace NHibernatePlugin.LanguageService.References
             if (subclassTag != null) {
                 return GetReferenceSymbolTable(subclassTag, propertyNameAttribute, "name");
             }
-            ClassTag parentClass = propertyNameAttribute.GetContainingElement<ClassTag>(true);
+            ClassTag parentClass = propertyNameAttribute.GetContainingNode<ClassTag>(true);
             return GetReferenceSymbolTable(parentClass, propertyNameAttribute, "name");
         }
 
@@ -108,6 +109,10 @@ namespace NHibernatePlugin.LanguageService.References
             }
 
             return symbolTable;
+        }
+
+        private IProject GetProject() {
+            throw new System.NotImplementedException();
         }
 
         protected override IReference BindToInternal(IDeclaredElement element) {

@@ -1,13 +1,13 @@
 using JetBrains.ReSharper.Psi.Xml.Impl.Tree;
+using JetBrains.ReSharper.Psi.Xml.Tree;
 using JetBrains.Util;
-using NHibernatePlugin.LanguageService.Parser;
 
 namespace NHibernatePlugin.LanguageService.Psi
 {
     public class FileTag : XmlTag
     {
-        public FileTag()
-            : base(MappingFileElementType.FILE) {
+        public FileTag(XmlCompositeNodeType type)
+            : base(type) {
             Logger.LogMessage("FileTag ctor");
         }
     }

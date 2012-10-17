@@ -64,7 +64,7 @@
     <Compile Include="Highlighting\PropertyHighlighting.cs" />
     <Compile Include="Highlighting\ReferenceHighlighting.cs" />
     <Compile Include="Highlighting\TypeHighlighting.cs" />
-    <Compile Include="LanguageService\HbmXmlLanguage.cs" />
+    <Compile Include="HbmXmlLanguage.cs" />
     <Compile Include="LanguageService\MappingFileBuildProviderChecker.cs" />
     <Compile Include="LanguageService\MappingFileLanguageCacheProvider.cs" />
     <Compile Include="LanguageService\MappingFileLanguageService.cs" />
@@ -84,13 +84,14 @@
     <Compile Include="LanguageService\Psi\HibernateMappingTag.cs" />
     <Compile Include="LanguageService\Parser\MappingFileCompositeNodeType.cs" />
     <Compile Include="LanguageService\Parser\MappingFileElementFactory.cs" />
-    <Compile Include="LanguageService\Parser\MappingFileElementType.cs" />
+    <Compile Include="LanguageService\Parser\MappingFileElementTypes.cs" />
     <Compile Include="LanguageService\Parser\MappingFileParser.cs" />
     <Compile Include="LanguageService\MappingFileProjectFileLanguageService.cs" />
     <Compile Include="LanguageService\MappingFileTypePresenter.cs" />
     <Compile Include="LanguageService\Psi\IdBagTag.cs" />
     <Compile Include="LanguageService\Psi\IdTag.cs" />
     <Compile Include="LanguageService\Psi\INamedTag.cs" />
+    <Compile Include="TreeNodeExtensions.cs" />
     <Compile Include="LanguageService\Psi\JoinedSubclassTag.cs" />
     <Compile Include="LanguageService\Psi\ListTag.cs" />
     <Compile Include="LanguageService\Psi\ManyToanyTag.cs" />

@@ -2,12 +2,16 @@ using JetBrains.ReSharper.Daemon;
 
 namespace NHibernatePlugin.Highlighting
 {
-    public abstract class Highlighting : ICustomAttributeHighlighting
+    public abstract class Highlighting : ICustomAttributeIdHighlighting
     {
         private readonly string m_Tooltip;
 
         protected Highlighting(string tooltip) {
             m_Tooltip = tooltip;
+        }
+
+        public bool IsValid() {
+            throw new System.NotImplementedException();
         }
 
         public string ToolTip {

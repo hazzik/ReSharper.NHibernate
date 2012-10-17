@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp;
+using JetBrains.ReSharper.Psi.CSharp.Impl;
 using JetBrains.Util;
 
 namespace NHibernatePlugin.LanguageService
@@ -10,13 +13,16 @@ namespace NHibernatePlugin.LanguageService
 
         public string GetPresentableName(IType type) {
             Logger.LogMessage("MappingFileTypePresenter.GetPresentableName {0}", type);
-            return GetTypePresenter(CSharpLanguageService.CSHARP).GetPresentableName(type);
+            return GetTypePresenter(CSharpLanguage.Instance).GetPresentableName(type);
         }
 
         public string GetLongPresentableName(IType type) {
             Logger.LogMessage("MappingFileTypePresenter.GetLongPresentableName {0}", type);
-            return GetTypePresenter(CSharpLanguageService.CSHARP).GetLongPresentableName(type);
+            return GetTypePresenter(CSharpLanguage.Instance).GetLongPresentableName(type);
+        }
 
+        public string GetUnresolvedScalarTypePresentation(string name, ICollection<IType> typeArguments, ISolution solution) {
+            throw new System.NotImplementedException();
         }
 
         private static ITypePresenter GetTypePresenter(PsiLanguageType language) {

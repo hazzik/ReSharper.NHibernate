@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.Build;
+using JetBrains.ProjectModel.Model2.Assemblies.Interfaces;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Caches;
@@ -31,7 +32,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
         }
 
         public bool InteriorShouldBeProcessed(ITreeNode element) {
-            if (element.Language != MappingFileLanguageService.MAPPING_FILE) {
+            if (element.Language != HbmXmlLanguage.Instance) {
                 return false;
             }
             if (element is HibernateMappingTag) {
@@ -44,7 +45,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
         }
 
         public void ProcessBeforeInterior(ITreeNode element) {
-            if (element.Language != MappingFileLanguageService.MAPPING_FILE) {
+            if (element.Language != HbmXmlLanguage.Instance) {
                 return;
             }
             HibernateMappingTag hibernateMappingTag = element as HibernateMappingTag;
@@ -135,7 +136,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
                     Logger.LogMessage("Type is defined in same project");
                     return;
                 }
-                foreach (IProjectReference projectReference in classTag.GetProject().GetProjectReferences()) {
+                foreach (var projectReference in classTag.GetProject().GetProjectReferences()) {
                     Logger.LogMessage("Project reference {0}", projectReference.ResolveReferencedProject().Name);
                     if (projectReference.ResolveReferencedProject() == projectFile.GetProject()) {
                         return;
@@ -252,8 +253,8 @@ namespace NHibernatePlugin.Analysis.MappingFile
             ProcessPrimitiveArray(tagHeaderNode, typeElement);
         }
 
-        private static TreeNodePredicate IsOfType(ITreeNode node, Type type) {
-            return delegate(ITreeNode treeNode) { return (treeNode.GetType() == type) && (treeNode.Parent == node) ? TreeNodeActionType.ACCEPT : TreeNodeActionType.CONTINUE; };
+        private static Func<ITreeNode, TreeNodeActionType> IsOfType(ITreeNode node, Type type) {
+            return treeNode => (treeNode.GetType() == type) && (treeNode.Parent == node) ? TreeNodeActionType.ACCEPT : TreeNodeActionType.CONTINUE;
         }
 
         private void ProcessOneToOne(ITreeNode node, ITypeElement typeElement) {
@@ -388,7 +389,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             IXmlAttribute typeAttribute = null;
             string accessMethod = null;
             IXmlAttribute accessAttribute = null;
-            foreach (IXmlAttribute attribute in xmlTag.Attributes) {
+            foreach (IXmlAttribute attribute in xmlTag.GetAttributes()) {
                 if ((attribute.XmlName == "name") && (attribute.UnquotedValue != null)) {
                     nameAttribute = attribute;
                     propertyName = attribute.UnquotedValue;

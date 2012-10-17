@@ -4,13 +4,12 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Resolve;
 using JetBrains.ReSharper.Refactorings.Conflicts;
 using JetBrains.ReSharper.Refactorings.Rename;
-using JetBrains.ReSharper.Refactorings.RenameModel;
 using JetBrains.ReSharper.Refactorings.Workflow;
 using JetBrains.Util;
 
 namespace NHibernatePlugin.Refactorings.Rename
 {
-    public class MappingFileRename : RenameBase
+    public class MappingFileRename : RenameHelperBase
     {
         public MappingFileRename(RenameWorkflow workflow, ISolution solution, IRefactoringDriver driver)
             : base(workflow, solution, driver) {

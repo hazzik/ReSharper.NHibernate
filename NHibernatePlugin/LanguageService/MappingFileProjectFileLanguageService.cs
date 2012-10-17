@@ -2,23 +2,21 @@ using System.Collections.Generic;
 using System.Drawing;
 using JetBrains.Application;
 using JetBrains.Application.Components;
-using JetBrains.ComponentModel;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
 using JetBrains.ReSharper.Psi.Parsing;
 using JetBrains.ReSharper.Psi.Xml;
-using JetBrains.ReSharper.Psi.Xml.Impl;
+using JetBrains.Text;
 using JetBrains.Util;
-using NHibernatePlugin.LanguageService;
 
 namespace NHibernatePlugin.LanguageService
 {
-    [ProjectFileLanguageService(new string[] { ".xml" }), ShellComponentInterface(ProgramConfigurations.ALL), ShellComponentImplementation, XmlLanguage]
-    public class MappingFileProjectFileLanguageService : IDerivedProjectFileLanguageService, IShellComponent
+    [ProjectFileLanguageService(new string[] { ".xml" }), ShellComponent(ProgramConfigurations.ALL), XmlLanguage]
+    public class MappingFileProjectFileLanguageService : IDerivedProjectFileLanguageService
     {
         public static ProjectFileType MAPPING_FILE = new ProjectFileType("MappingFile");
-        private static readonly PsiLanguageType[] POSSIBLE_PSI_LANGUAGE_TYPES = new PsiLanguageType[] { MappingFileLanguageService.MAPPING_FILE };
+        private static readonly PsiLanguageType[] POSSIBLE_PSI_LANGUAGE_TYPES = new PsiLanguageType[] { HbmXmlLanguage.Instance };
         //private readonly IWordIndexLanguageProvider m_WordIndexLanguageProvider = new XmlWordIndexLanguageProvider();
 
         public ProjectFileType GetProjectFileType(IProjectFile file) {
@@ -37,15 +35,15 @@ namespace NHibernatePlugin.LanguageService
         public PsiLanguageType GetPsiLanguageType(ProjectFileType projectFileType) {
             //Logger.LogMessage("MappingFileProjectFileLanguageService.GetPsiLanguageType for project file type {0}", projectFileType.Name);
             if (projectFileType != MAPPING_FILE) {
-                return PsiLanguageType.UNKNOWN;
+                return UnknownLanguage.UNKNOWN;
             }
-            return MappingFileLanguageService.MAPPING_FILE;
+            return HbmXmlLanguage.Instance;
         }
 
         public ILexerFactory CreateLexer(ProjectFileType languageType, IBuffer buffer) {
             //Logger.LogMessage("MappingFileProjectFileLanguageService.CreateLexer for language type {0}", languageType.Name);
             if (languageType == MAPPING_FILE) {
-                return new XmlLexerFactory(MappingFileLanguageService.MAPPING_FILE);
+                return new XmlLexerFactory(HbmXmlLanguage.Instance);
             }
             return null;
         }
@@ -68,7 +66,7 @@ namespace NHibernatePlugin.LanguageService
         public IWordIndexLanguageProvider WordIndexLanguageProvider {
             get {
                 Logger.LogMessage("MappingFileProjectFileLanguageService.WordIndexLanguageProvider");
-                return ProjectFileLanguageServiceManager.Instance.GetService(XmlProjectFileLanguageService.XML).WordIndexLanguageProvider;
+                return ProjectFileLanguageServiceManager.Instance.GetService(XmlLanguage.Instance).WordIndexLanguageProvider;
                 //return m_WordIndexLanguageProvider; 
             }
         }

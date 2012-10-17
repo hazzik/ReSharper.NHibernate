@@ -2,18 +2,18 @@
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Xml;
 
-namespace NHibernatePlugin.LanguageService
+namespace NHibernatePlugin
 {
     [LanguageDefinition(Name)]
     public class HbmXmlLanguage : XmlLanguage
     {
-        public new const string Name = "HBM_XML";
+        public new const string Name = "MappingFile";
 
         [CanBeNull]
-        public static readonly HbmXmlLanguage Instance;
+        public static readonly HbmXmlLanguage Instance = new HbmXmlLanguage();
 
         private HbmXmlLanguage()
-            : base(Name, "HbmXml") {
+            : base(Name, "MappingFile") {
         }
 
         protected HbmXmlLanguage([NotNull] string name)

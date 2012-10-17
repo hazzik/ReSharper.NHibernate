@@ -1,19 +1,16 @@
-using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Psi;
-using NHibernatePlugin.LanguageService;
+using JetBrains.ReSharper.Psi.Xaml;
 
 namespace NHibernatePlugin.Analysis.MappingFile
 {
-    [LanguageSpecificImplementation(MappingFileLanguageService.MAPPING_FILE_LANGUAGEID, typeof(ILanguageSpecificDaemonBehavior))]
+    [Language(typeof(HbmXmlLanguage))]
     public class MappingFileDaemonBehaviour : ILanguageSpecificDaemonBehavior
     {
         public ErrorStripeRequest InitialErrorStripe(IPsiSourceFile file) {
-            if (PsiSupportManager.Instance.ShouldBuildPsi(file) &&
-                (ProjectFileLanguageServiceManager.Instance.GetPsiLanguageType(file) == MappingFileLanguageService.MAPPING_FILE)) {
-                return ErrorStripeRequest.STRIPE_AND_ERRORS;
-            }
-            return ErrorStripeRequest.NONE;
+            return !file.Properties.ShouldBuildPsi || (!file.PrimaryPsiLanguage.Is<HbmXmlLanguage>())
+                ? ErrorStripeRequest.NONE
+                : ErrorStripeRequest.STRIPE_AND_ERRORS;
         }
 
         public bool CanShowErrorBox {

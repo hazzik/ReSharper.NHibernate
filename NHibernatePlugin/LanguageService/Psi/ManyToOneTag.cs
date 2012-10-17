@@ -1,13 +1,13 @@
 using JetBrains.ReSharper.Psi.Xml.Impl.Tree;
+using JetBrains.ReSharper.Psi.Xml.Tree;
 using JetBrains.Util;
-using NHibernatePlugin.LanguageService.Parser;
 
 namespace NHibernatePlugin.LanguageService.Psi
 {
     public class ManyToOneTag : XmlTag
     {
-        public ManyToOneTag()
-            : base(MappingFileElementType.MANYTOONE) {
+        public ManyToOneTag(XmlCompositeNodeType type)
+            : base(type) {
             Logger.LogMessage("ManyToOneTag ctor");
         }
     }

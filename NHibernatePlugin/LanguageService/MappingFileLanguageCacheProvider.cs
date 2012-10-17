@@ -5,6 +5,7 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
 using JetBrains.ReSharper.Psi.Impl;
 using JetBrains.ReSharper.Psi.Tree;
+using JetBrains.Util;
 
 namespace NHibernatePlugin.LanguageService
 {
@@ -16,17 +17,17 @@ namespace NHibernatePlugin.LanguageService
             m_LanguageType = languageType;
         }
 
-        public void BuildCache(IDummyHolder dummyHolder, ICacheBuilder builder) {
+        public void BuildCache(ISandBox dummyHolder, ICacheBuilder builder) {
+        }
+
+        public bool IsCaseSensitive(IPsiModule module) {
+            throw new InvalidOperationException();
         }
 
         public void BuildCache(IFile file, ICacheBuilder builder) {
         }
 
-        public bool HasCaseSensitiveName(TypeElement element) {
-            throw new InvalidOperationException();
-        }
-
-        public ProjectFilePart LoadProjectFilePart(IPsiSourceFile projectFile, IReader reader) {
+        public ProjectFilePart LoadProjectFilePart(IPsiSourceFile projectFile, ProjectFilePartsTree tree, IReader reader) {
             return null;
         }
 
@@ -34,15 +35,16 @@ namespace NHibernatePlugin.LanguageService
             return false;
         }
 
-        public void OnProjectPropertiesChange(IProject project, ICollection<IProjectFile> files) {
+        public IEnumerable<IPsiSourceFile> OnPsiModulePropertiesChange(IPsiModule module) {
+            return EmptyList<IPsiSourceFile>.InstanceList;
+        }
+
+        public IEnumerable<IPsiSourceFile> OnProjectModelChange(ProjectModelChange projectModelChange) {
+            return EmptyList<IPsiSourceFile>.InstanceList;
         }
 
         public Part ReadPart(byte tag, IReader reader) {
             return null;
-        }
-
-        public bool CaseSensitive {
-            get { return true; }
         }
 
         public PsiLanguageType LanguageType {
