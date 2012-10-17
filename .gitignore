@@ -1,0 +1,32 @@
+
+# /
+/_ReSharper.NHibernatePlugin
+/*.suo
+/*.user
+
+# /Examples/
+/Examples/[Bb]in
+/Examples/obj
+/Examples/[Dd]ebug
+/Examples/[Rr]elease
+/Examples/*.user
+/Examples/*.aps
+/Examples/*.eto
+
+# /NHibernatePlugin/
+/NHibernatePlugin/[Bb]in
+/NHibernatePlugin/obj
+/NHibernatePlugin/[Dd]ebug
+/NHibernatePlugin/[Rr]elease
+/NHibernatePlugin/*.user
+/NHibernatePlugin/*.aps
+/NHibernatePlugin/*.eto
+
+# /NHibernatePlugin.Tests/
+/NHibernatePlugin.Tests/[Bb]in
+/NHibernatePlugin.Tests/obj
+/NHibernatePlugin.Tests/[Dd]ebug
+/NHibernatePlugin.Tests/[Rr]elease
+/NHibernatePlugin.Tests/*.user
+/NHibernatePlugin.Tests/*.aps
+/NHibernatePlugin.Tests/*.eto
