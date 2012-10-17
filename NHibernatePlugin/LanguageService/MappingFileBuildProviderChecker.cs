@@ -1,6 +1,5 @@
-using JetBrains.ComponentModel;
+using JetBrains.Application.Components;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 
 namespace NHibernatePlugin.LanguageService
 {

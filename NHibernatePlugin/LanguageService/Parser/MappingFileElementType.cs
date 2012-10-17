@@ -1,4 +1,5 @@
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
+using JetBrains.ReSharper.Psi.Xml.Tree;
 using JetBrains.Util;
 using NHibernatePlugin.LanguageService.Psi;
 
@@ -6,36 +7,36 @@ namespace NHibernatePlugin.LanguageService.Parser
 {
     public static class MappingFileElementType
     {
-        public static readonly CompositeNodeType FILE = new FILE_TYPE();
-        public static readonly CompositeNodeType HIBERNATE_MAPPING = new HIBERNATE_MAPPING_TYPE();
-        public static readonly CompositeNodeType CLASS = new CLASS_TYPE();
-        public static readonly CompositeNodeType ID = new ID_TYPE();
-        public static readonly CompositeNodeType PROPERTY = new PROPERTY_TYPE();
-        public static readonly CompositeNodeType BAG = new BAG_TYPE();
-        public static readonly CompositeNodeType IDBAG = new IDBAG_TYPE();
-        public static readonly CompositeNodeType SET = new SET_TYPE();
-        public static readonly CompositeNodeType LIST = new LIST_TYPE();
-        public static readonly CompositeNodeType ANY = new ANY_TYPE();
-        public static readonly CompositeNodeType MAP = new MAP_TYPE();
-        public static readonly CompositeNodeType ARRAY = new ARRAY_TYPE();
-        public static readonly CompositeNodeType PRIMITIVEARRAY = new PRIMITIVEARRAY_TYPE();
-        public static readonly CompositeNodeType COMPONENT = new COMPONENT_TYPE();
-        public static readonly CompositeNodeType DYNAMICCOMPONENT = new DYNAMICCOMPONENT_TYPE();
-        public static readonly CompositeNodeType SUBCLASS = new SUBCLASS_TYPE();
-        public static readonly CompositeNodeType JOINEDSUBCLASS = new JOINEDSUBCLASS_TYPE();
-        public static readonly CompositeNodeType ONETOONE = new ONETOONE_TYPE();
-        public static readonly CompositeNodeType ONETOMANY = new ONETOMANY_TYPE();
-        public static readonly CompositeNodeType MANYTOMANY = new MANYTOMANY_TYPE();
-        public static readonly CompositeNodeType MANYTOANY = new MANYTOANY_TYPE();
-        public static readonly CompositeNodeType MANYTOONE = new MANYTOONE_TYPE();
-        public static readonly CompositeNodeType COMPOSITE_ELEMENT = new COMPOSITE_ELEMENT_TYPE();
-        public static readonly CompositeNodeType NESTED_COMPOSITE_ELEMENT = new NESTED_COMPOSITE_ELEMENT_TYPE();
-        public static readonly CompositeNodeType PARENT = new PARENT_TYPE();
+        public static readonly XmlCompositeNodeType FILE = new FILE_TYPE();
+        public static readonly XmlCompositeNodeType HIBERNATE_MAPPING = new HIBERNATE_MAPPING_TYPE();
+        public static readonly XmlCompositeNodeType CLASS = new CLASS_TYPE();
+        public static readonly XmlCompositeNodeType ID = new ID_TYPE();
+        public static readonly XmlCompositeNodeType PROPERTY = new PROPERTY_TYPE();
+        public static readonly XmlCompositeNodeType BAG = new BAG_TYPE();
+        public static readonly XmlCompositeNodeType IDBAG = new IDBAG_TYPE();
+        public static readonly XmlCompositeNodeType SET = new SET_TYPE();
+        public static readonly XmlCompositeNodeType LIST = new LIST_TYPE();
+        public static readonly XmlCompositeNodeType ANY = new ANY_TYPE();
+        public static readonly XmlCompositeNodeType MAP = new MAP_TYPE();
+        public static readonly XmlCompositeNodeType ARRAY = new ARRAY_TYPE();
+        public static readonly XmlCompositeNodeType PRIMITIVEARRAY = new PRIMITIVEARRAY_TYPE();
+        public static readonly XmlCompositeNodeType COMPONENT = new COMPONENT_TYPE();
+        public static readonly XmlCompositeNodeType DYNAMICCOMPONENT = new DYNAMICCOMPONENT_TYPE();
+        public static readonly XmlCompositeNodeType SUBCLASS = new SUBCLASS_TYPE();
+        public static readonly XmlCompositeNodeType JOINEDSUBCLASS = new JOINEDSUBCLASS_TYPE();
+        public static readonly XmlCompositeNodeType ONETOONE = new ONETOONE_TYPE();
+        public static readonly XmlCompositeNodeType ONETOMANY = new ONETOMANY_TYPE();
+        public static readonly XmlCompositeNodeType MANYTOMANY = new MANYTOMANY_TYPE();
+        public static readonly XmlCompositeNodeType MANYTOANY = new MANYTOANY_TYPE();
+        public static readonly XmlCompositeNodeType MANYTOONE = new MANYTOONE_TYPE();
+        public static readonly XmlCompositeNodeType COMPOSITE_ELEMENT = new COMPOSITE_ELEMENT_TYPE();
+        public static readonly XmlCompositeNodeType NESTED_COMPOSITE_ELEMENT = new NESTED_COMPOSITE_ELEMENT_TYPE();
+        public static readonly XmlCompositeNodeType PARENT = new PARENT_TYPE();
         
-        public static readonly CompositeNodeType MISCELLANEOUS = new MISCELLANEOUS_TYPE();
+        public static readonly XmlCompositeNodeType MISCELLANEOUS = new MISCELLANEOUS_TYPE();
 
-        public static readonly CompositeNodeType PROPERTY_NAME_ATTRIBUTE = new PROPERTY_NAME_ATTRIBUTE_TYPE();
-        public static readonly CompositeNodeType CLASS_NAME_ATTRIBUTE = new CLASS_NAME_ATTRIBUTE_TYPE();
+        public static readonly XmlCompositeNodeType PROPERTY_NAME_ATTRIBUTE = new PROPERTY_NAME_ATTRIBUTE_TYPE();
+        public static readonly XmlCompositeNodeType CLASS_NAME_ATTRIBUTE = new CLASS_NAME_ATTRIBUTE_TYPE();
 
         private class FILE_TYPE : MappingFileCompositeNodeType
         {

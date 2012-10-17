@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using JetBrains.Application;
+using JetBrains.Application.Components;
 using JetBrains.ComponentModel;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;

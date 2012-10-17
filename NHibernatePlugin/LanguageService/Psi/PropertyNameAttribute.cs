@@ -15,7 +15,7 @@ namespace NHibernatePlugin.LanguageService.Psi
             m_ContainerName = containerName;
         }
 
-        protected PropertyNameAttribute(CompositeNodeType compositeNodeType)
+        protected PropertyNameAttribute(XmlCompositeNodeType compositeNodeType)
             : base(compositeNodeType) {
         }
 

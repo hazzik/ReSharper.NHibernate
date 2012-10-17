@@ -14,7 +14,7 @@ namespace NHibernatePlugin.LanguageService.References
 {
     public class PropertyNameReference : XmlReferenceWithTokenBase<PropertyNameAttribute>
     {
-        public PropertyNameReference(PropertyNameAttribute owner, IXmlTokenNode token, TextRange rangeWithin)
+        public PropertyNameReference(PropertyNameAttribute owner, IXmlToken token, TreeTextRange rangeWithin)
             : base(owner, token, rangeWithin) {
         }
 
@@ -26,7 +26,7 @@ namespace NHibernatePlugin.LanguageService.References
             get { return MappingFileElementFactory.Instance; }
         }
 
-        public override string[] GetAllNames() {
+        public override IEnumerable<string> GetAllNames() {
             Logger.LogMessage("GetAllNames for {0}/{1}", GetElement().GetType(), GetElement().GetText());
             PropertyNameAttribute propertyNameAttribute = GetElement() as PropertyNameAttribute;
             if ((propertyNameAttribute == null) || (propertyNameAttribute.UnquotedValue == null)) {

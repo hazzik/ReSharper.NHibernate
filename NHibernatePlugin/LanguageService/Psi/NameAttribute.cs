@@ -1,5 +1,6 @@
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Xml.Impl.Tree;
+using JetBrains.ReSharper.Psi.Xml.Tree;
 
 namespace NHibernatePlugin.LanguageService.Psi
 {
@@ -7,7 +8,7 @@ namespace NHibernatePlugin.LanguageService.Psi
     {
         protected string m_ContainerName;
 
-        protected NameAttribute(CompositeNodeType compositeNodeType)
+        protected NameAttribute(XmlCompositeNodeType compositeNodeType)
             : base(compositeNodeType) {
         }
 

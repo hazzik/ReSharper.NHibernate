@@ -10,7 +10,7 @@ using NHibernatePlugin.Helper;
 
 namespace NHibernatePlugin.LanguageService
 {
-    public class MappingFileReferenceSearcher : IReferenceSearchContext, ILanguageSpecificSearcher
+    public class MappingFileReferenceSearcher : IReferenceSearchContext, IDomainSpecificSearcher
     {
         private readonly FindResultConsumer m_Consumer;
         private readonly HashSet<string> m_ElementNames = new HashSet<string>();
@@ -35,7 +35,7 @@ namespace NHibernatePlugin.LanguageService
             return m_ElementNamesArray;
         }
 
-        public bool ProcessElement(IElement element) {
+        public bool ProcessElement(ITreeNode element) {
             return (new ReferenceSearchSourceFileProcessor(this, element.ToTreeNode()).Run() == FindExecution.Stop);
         }
 

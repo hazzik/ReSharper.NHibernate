@@ -26,11 +26,11 @@ namespace NHibernatePlugin.LanguageService
             throw new InvalidOperationException();
         }
 
-        public ProjectFilePart LoadProjectFilePart(IProjectFile projectFile, IReader reader) {
+        public ProjectFilePart LoadProjectFilePart(IPsiSourceFile projectFile, IReader reader) {
             return null;
         }
 
-        public bool NeedCacheUpdate(IElement elementContainingChanges, PsiChangedElementType type) {
+        public bool NeedCacheUpdate(ITreeNode elementContainingChanges, PsiChangedElementType type) {
             return false;
         }
 

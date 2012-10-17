@@ -1,4 +1,5 @@
 using JetBrains.Application;
+using JetBrains.Application.Components;
 using JetBrains.ComponentModel;
 using JetBrains.ReSharper.Daemon;
 using NHibernatePlugin.Highlighting;

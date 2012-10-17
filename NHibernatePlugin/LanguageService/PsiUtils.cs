@@ -101,7 +101,7 @@ namespace NHibernatePlugin.LanguageService
         public static ITypeElement GetTypeElement(IXmlTag classTag, ISolution solution, string className) {
             string @namespace = "";
             string assembly = "";
-            HibernateMappingTag hibernateMapping = classTag.GetContainingElement<HibernateMappingTag>(false);
+            var hibernateMapping = classTag.GetContainingNode<HibernateMappingTag>(false);
             if (hibernateMapping != null) {
                 IXmlAttribute namespaceAttribute = hibernateMapping.GetNamespaceAttribute();
                 @namespace = namespaceAttribute == null ? "" : namespaceAttribute.UnquotedValue;

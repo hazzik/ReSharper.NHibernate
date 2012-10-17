@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Application;
+using JetBrains.Application.Components;
 using JetBrains.ComponentModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
@@ -12,10 +13,10 @@ using NHibernatePlugin.Helper;
 
 namespace NHibernatePlugin.LanguageService
 {
-    [ShellComponentInterface(ProgramConfigurations.ALL), ShellComponentImplementation]
-    public class MappingFileSearcherFactory : ILanguageSpecificSearcherFactory, IShellComponent
+    [ShellComponent(ProgramConfigurations.ALL)]
+    public class MappingFileSearcherFactory : IDomainSpecificSearcherFactory, IShellComponent
     {
-        private static readonly ILanguageSpecificSearcherFactory s_Instance = new MappingFileSearcherFactory();
+        private static readonly IDomainSpecificSearcherFactory s_Instance = new MappingFileSearcherFactory();
 
         public void Init() {
             Logger.LogMessage("MappingFileSearcherFactory Init called");
@@ -44,32 +45,32 @@ namespace NHibernatePlugin.LanguageService
             return false;
         }
 
-        public ILanguageSpecificSearcher CreateConstructorSpecialReferenceSearcher(ICollection<IConstructor> constructors, FindResultConsumer consumer) {
+        public IDomainSpecificSearcher CreateConstructorSpecialReferenceSearcher(ICollection<IConstructor> constructors, FindResultConsumer consumer) {
             return null;
         }
 
-        public ILanguageSpecificSearcher CreateMethodsReferencedByDelegateSearcher(IDelegate @delegate, FindResultConsumer consumer) {
+        public IDomainSpecificSearcher CreateMethodsReferencedByDelegateSearcher(IDelegate @delegate, FindResultConsumer consumer) {
             return null;
         }
 
-        public ILanguageSpecificSearcher CreateReferenceSearcher(ICollection<IDeclaredElement> elements, FindResultConsumer consumer) {
+        public IDomainSpecificSearcher CreateReferenceSearcher(ICollection<IDeclaredElement> elements, FindResultConsumer consumer) {
             Logger.LogMessage("CreateReferenceSearcher called");
             return new MappingFileReferenceSearcher(elements, consumer);
         }
 
-        public ILanguageSpecificSearcher CreateTextOccurenceSeacrher(ICollection<IDeclaredElement> elements, FindResultConsumer consumer) {
+        public IDomainSpecificSearcher CreateTextOccurenceSeacrher(ICollection<IDeclaredElement> elements, FindResultConsumer consumer) {
             return null;
         }
 
-        public ILanguageSpecificSearcher CreateTextOccurenceSeacrher(string subject, FindResultConsumer consumer) {
+        public IDomainSpecificSearcher CreateTextOccurenceSeacrher(string subject, FindResultConsumer consumer) {
             return null;
         }
 
-        public ILanguageSpecificSearcher CreateLateBoundReferenceSearcher(ICollection<IDeclaredElement> elements, FindResultConsumer consumer) {
+        public IDomainSpecificSearcher CreateLateBoundReferenceSearcher(ICollection<IDeclaredElement> elements, FindResultConsumer consumer) {
             return null;
         }
 
-        public ILanguageSpecificSearcher CreateAnonymousTypeSearcher(IList<Pair<string, IType>> typeDescription, FindResultConsumer consumer) {
+        public IDomainSpecificSearcher CreateAnonymousTypeSearcher(IList<Pair<string, IType>> typeDescription, FindResultConsumer consumer) {
             return null;
         }
 
@@ -77,11 +78,11 @@ namespace NHibernatePlugin.LanguageService
             return null;
         }
 
-        public Pair<ICollection<IDeclaredElement>, Predicate<IReference>>? GetRelatedDeclaredElements(IDeclaredElement element) {
-            return null;
+        public IEnumerable<Pair<IDeclaredElement, Predicate<FindResult>>> GetRelatedDeclaredElements(IDeclaredElement element) {
+            yield break;
         }
 
-        public static ILanguageSpecificSearcherFactory Instance {
+        public static IDomainSpecificSearcherFactory Instance {
             get { return s_Instance; }
         }
     }

@@ -30,7 +30,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             m_Process = myProcess;
         }
 
-        public bool InteriorShouldBeProcessed(IElement element) {
+        public bool InteriorShouldBeProcessed(ITreeNode element) {
             if (element.Language != MappingFileLanguageService.MAPPING_FILE) {
                 return false;
             }
@@ -43,7 +43,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             return true;
         }
 
-        public void ProcessBeforeInterior(IElement element) {
+        public void ProcessBeforeInterior(ITreeNode element) {
             if (element.Language != MappingFileLanguageService.MAPPING_FILE) {
                 return;
             }
@@ -143,7 +143,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
                 }
             }
             
-            IElement typeElementTag = classTag.GetNameAttribute();
+            ITreeNode typeElementTag = classTag.GetNameAttribute();
             AddHighlighting(typeElementTag, new ReferenceHighlighting(string.Format("Mapping project '{0}' should reference project '{1}'",
                 projectOfMappings.Name, typeElement.GetProjectFiles()[0].GetProject().Name)));
         }
@@ -411,7 +411,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             }
         }
 
-        private AccessMethod HighlightUndefinedAccessAttribute(IElement accessAttribute, string accessMethod) {
+        private AccessMethod HighlightUndefinedAccessAttribute(ITreeNode accessAttribute, string accessMethod) {
             Logger.LogMessage("HighlightUndefinedAccessAttribute {0}/{1}", accessAttribute, accessMethod);
             if (string.IsNullOrEmpty(accessMethod)) {
                 Logger.LogMessage("  default: {0}", m_DefaultAccess);
@@ -424,7 +424,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             return access;
         }
 
-        private void HighlightUndefinedMappedProperty(IXmlTag xmlTag, string propertyName, IElement nameAttribute, IElement typeAttribute, ITypeElement typeElement, AccessMethod access, string attributeName) {
+        private void HighlightUndefinedMappedProperty(IXmlTag xmlTag, string propertyName, ITreeNode nameAttribute, ITreeNode typeAttribute, ITypeElement typeElement, AccessMethod access, string attributeName) {
             IAccessor propertyGetter = null;
             IAccessor propertySetter = null;
             IField field = null;
@@ -465,7 +465,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
             }
         }
 
-        private void HighlightPropertyType(IAccessor accessor, IElement nameAttribute, ITypeOwner field, IElement typeAttribute, IXmlTag xmlTag, string attributeName) {
+        private void HighlightPropertyType(IAccessor accessor, ITreeNode nameAttribute, ITypeOwner field, ITreeNode typeAttribute, IXmlTag xmlTag, string attributeName) {
             ITypeElement propertyClass = HighlightUndefinedType(xmlTag, attributeName);
             if (accessor != null) {
                 // TODO: use accessor.ReturnType on getter
@@ -500,29 +500,29 @@ namespace NHibernatePlugin.Analysis.MappingFile
             }
         }
 
-        private void HighlightField(AccessMethod access, string propertyName, IElement nameAttribute, string className, IField field) {
+        private void HighlightField(AccessMethod access, string propertyName, ITreeNode nameAttribute, string className, IField field) {
             if (field == null) {
                 AddHighlighting(nameAttribute, new PropertyHighlighting(string.Format("Field '{0}' not found in class '{1}'", access.Name(propertyName), className)));
             }
         }
 
-        private void HighlightPropertySetter(string propertyName, IAccessor accessor, IElement nameAttribute, string className) {
+        private void HighlightPropertySetter(string propertyName, IAccessor accessor, ITreeNode nameAttribute, string className) {
             if (accessor == null) {
                 AddHighlighting(nameAttribute, new PropertyHighlighting(string.Format("Setter for property '{0}' not found in class '{1}'", propertyName, className)));
             }
         }
 
-        private void HighlightPropertyGetter(string propertyName, IAccessor accessor, IElement nameAttribute, string className) {
+        private void HighlightPropertyGetter(string propertyName, IAccessor accessor, ITreeNode nameAttribute, string className) {
             if (accessor == null) {
                 AddHighlighting(nameAttribute, new PropertyHighlighting(string.Format("Getter for property '{0}' not found in class '{1}'", propertyName, className)));
             }
         }
 
-        private void AddHighlighting(IElement elementToHighlight, IHighlighting highlighting) {
+        private void AddHighlighting(ITreeNode elementToHighlight, IHighlighting highlighting) {
             m_Highlightings.Add(new HighlightingInfo(elementToHighlight.GetDocumentRange(), highlighting));
         }
 
-        public void ProcessAfterInterior(IElement element) {
+        public void ProcessAfterInterior(ITreeNode element) {
         }
 
         public bool ProcessingIsFinished {

@@ -1,8 +1,7 @@
 using JetBrains.Application;
-using JetBrains.ComponentModel;
+using JetBrains.Application.Components;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.ExtensionsAPI;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
 using JetBrains.ReSharper.Psi.Parsing;
 using JetBrains.ReSharper.Psi.Tree;
@@ -27,7 +26,7 @@ namespace NHibernatePlugin.LanguageService
             return new MappingFileParser(lexer, checkForInterrupt);
         }
 
-        public override bool ShouldInvalidatePsiCache(IElement element, PsiChangedElementType elementType) {
+        public override bool ShouldInvalidatePsiCache(ITreeNode element, PsiChangedElementType elementType) {
             return true;
         }
         public override ILanguageSpecificSearcherFactory LanguageSpecificSearcherFactory {

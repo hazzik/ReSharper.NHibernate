@@ -8,7 +8,7 @@ namespace NHibernatePlugin.Analysis.MappingFile
     [LanguageSpecificImplementation(MappingFileLanguageService.MAPPING_FILE_LANGUAGEID, typeof(ILanguageSpecificDaemonBehavior))]
     public class MappingFileDaemonBehaviour : ILanguageSpecificDaemonBehavior
     {
-        public ErrorStripeRequest InitialErrorStripe(IProjectFile file) {
+        public ErrorStripeRequest InitialErrorStripe(IPsiSourceFile file) {
             if (PsiSupportManager.Instance.ShouldBuildPsi(file) &&
                 (ProjectFileLanguageServiceManager.Instance.GetPsiLanguageType(file) == MappingFileLanguageService.MAPPING_FILE)) {
                 return ErrorStripeRequest.STRIPE_AND_ERRORS;
@@ -17,6 +17,10 @@ namespace NHibernatePlugin.Analysis.MappingFile
         }
 
         public bool CanShowErrorBox {
+            get { return true; }
+        }
+
+        public bool RunInSolutionAnalysis {
             get { return true; }
         }
     }
