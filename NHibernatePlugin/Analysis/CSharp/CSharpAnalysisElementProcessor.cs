@@ -16,11 +16,11 @@ namespace NHibernatePlugin.Analysis.CSharp
             m_Process = myProcess;
         }
 
-        public bool InteriorShouldBeProcessed(IElement element) {
-            return false;   // TODO: set to true if anything should processed !!
+        public bool InteriorShouldBeProcessed(ITreeNode element) {
+            return false;
         }
 
-        public void ProcessBeforeInterior(IElement element) {
+        public void ProcessBeforeInterior(ITreeNode element) {
             IPropertyDeclaration propertyDeclaration = element as IPropertyDeclaration;
             if (propertyDeclaration != null) {
                 Logger.LogMessage("C# ProcessBeforeInterior Property {0}", propertyDeclaration.DeclaredName);
@@ -32,7 +32,7 @@ namespace NHibernatePlugin.Analysis.CSharp
             }
         }
 
-        public void ProcessAfterInterior(IElement element) {
+        public void ProcessAfterInterior(ITreeNode element) {
         }
 
         public bool ProcessingIsFinished {
