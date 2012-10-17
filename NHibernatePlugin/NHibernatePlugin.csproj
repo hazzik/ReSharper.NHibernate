@@ -64,6 +64,7 @@
     <Compile Include="Highlighting\PropertyHighlighting.cs" />
     <Compile Include="Highlighting\ReferenceHighlighting.cs" />
     <Compile Include="Highlighting\TypeHighlighting.cs" />
+    <Compile Include="LanguageService\HbmXmlLanguage.cs" />
     <Compile Include="LanguageService\MappingFileBuildProviderChecker.cs" />
     <Compile Include="LanguageService\MappingFileLanguageCacheProvider.cs" />
     <Compile Include="LanguageService\MappingFileLanguageService.cs" />
@@ -128,7 +129,7 @@
     <Compile Include="TypeNames\Scanners\Scanner.cs" />
     <Compile Include="TypeNames\Scanners\Token.cs" />
   </ItemGroup>
-    <PropertyGroup Condition="'$(Configuration)' == 'Debug-7.1'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug-7.1'">
     <ReSharperSdkTargets Condition=" '$(ReSharperSdkTargets)' == '' ">$(MSBuildExtensionsPath)\JetBrains\ReSharper.SDK\v7.1</ReSharperSdkTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' != 'Debug-7.1'">
